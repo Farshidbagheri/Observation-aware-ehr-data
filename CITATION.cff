@@ -1,7 +1,9 @@
 cff-version: 1.2.0
-message: "If you use this research software, please cite the repository and the specific release or archived DOI, when available."
+message: "Please cite this software release using the version-specific Zenodo DOI 10.5281/zenodo.23752944 and separately cite both source PhysioNet demo datasets when relevant."
 type: software
 version: 0.3.0
+date-released: 2026-10-29
+doi: 10.5281/zenodo.23752944
 license: MIT
 title: "Observation-Aware EHR Data: Temporal Provenance and Decision-Time Retrieval"
 authors:

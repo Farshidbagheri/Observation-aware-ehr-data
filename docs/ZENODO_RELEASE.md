@@ -1,30 +1,31 @@
-# Zenodo source archive: first software deposit
+# Zenodo software archive: published release v0.3.0
 
 **Project:** Observation-Aware EHR Data  
 **Resource type:** Software  
 **Creator:** Farshid Bagheri Saravi  
 **Affiliation:** Case Western Reserve University  
 **Version:** 0.3.0  
-**DOI reserved in existing draft:** `10.5281/zenodo.23752944`  
-**Zenodo status:** Draft; **not published, not a citable DOI yet**.
+**Version DOI:** [10.5281/zenodo.23752944](https://doi.org/10.5281/zenodo.23752944)  
+**All-versions DOI:** [10.5281/zenodo.23752943](https://doi.org/10.5281/zenodo.23752943)  
+**Zenodo record:** [23752944](https://zenodo.org/records/23752944)  
+**Publication date:** October 29, 2026  
+**Archived source commit:** [`b9bcdc523d6416dec471699edfb8ede590a3378a`](https://github.com/Farshidbagheri/Observation-aware-ehr-data/tree/b9bcdc523d6416dec471699edfb8ede590a3378a)  
+**Version-specific verification:** [GitHub Actions run 40816116888](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40816116888)  
+**Status:** Published; author-reported Zenodo deposit, under MIT.
 
-## What to upload
+## What was archived
 
-Use a **new GitHub source ZIP downloaded after the licensing/README commit**.
-Do not use the older v0.3 source ZIP already in the Zenodo draft: it predates
-the MIT license and attribution/DOI documentation. Use the GitHub
-**Code → Download ZIP** control, or download the immutable commit-specific source
-ZIP after confirming the exact commit SHA.
+The v0.3.0 software record preserves a ZIP of the original EHR research
+repository prepared from the source commit above, including the MIT license,
+rights and dataset attribution, citation metadata, analysis code,
+reproducibility tests, aggregate research figures, and documentation.
+The record's files are immutable after publication; subsequent development
+on `main` is not retroactively part of that snapshot.
 
-Upload **only this EHR repository**. Exclude CVs, fellowship proposals, GPU
-repository sources, original medical CSV/GZ tables, local JSONL event streams,
-credentials, local database files, and any test result with subject identifiers.
-
-Before replacing the ZIP, check it contains `LICENSE`,
-`RIGHTS_AND_LICENSES.md`, `CITATION.cff`, `README.md`,
-`src/`, `tests/`, `scripts/`, `docs/` and the seven figure pairs.
-The GitHub code archive contains only tracked files from that commit,
-not ignored `data/raw/` data.
+**Important provenance boundary:** The stored ZIP was selected by the
+depositor, and its byte-for-byte match to the commit has not been independently
+verified here. Public source datasets, restricted records and personally
+identifying clinical files should not be deposited in later releases.
 
 ## Zenodo form settings
 
@@ -36,7 +37,7 @@ not ignored `data/raw/` data.
   validated antibiotic-treatment effect or clinical decision system.
 - Version: **0.3.0**
 - License: **MIT** (remove Zenodo default CC BY 4.0)
-- Files access: Public **only after rights and contents have been approved**
+- Files access: Public Public
 - Repository URL: https://github.com/Farshidbagheri/Observation-aware-ehr-data
 - Programming language: Python
 - Publisher: Zenodo
@@ -49,21 +50,23 @@ not ignored `data/raw/` data.
   `10.13026/jzz5-vs76` and clinical demo DOI `10.13026/dp1f-ex47`.
   These are **source datasets**, not previous versions of this software.
 
-## Essential sequence
+## Using and citing the archive
 
-1. Save the current Zenodo draft; **do not delete it** or lose its DOI.
-2. Confirm author has authority to release this software under MIT.
-3. Verify the new GitHub commit passed the relevant automated checks.
-4. Download a fresh ZIP from that exact repository commit.
-5. In Zenodo draft, **remove the previous ZIP and upload the new one**.
-6. Select **MIT** as the software record license, check title, author,
-   description, version and attached ZIP.
-7. Preview, then click **Publish** only when all content and rights are approved.
-8. After Zenodo issues a public record, confirm that the DOI resolves and that
-   it is the version-specific DOI. Then update the code repository citation
-   and the MongoDB fellowship Research Summary/CV.
+For a scientific paper, software assessment, CV or fellowship application,
+cite the **version-specific DOI**:
+[10.5281/zenodo.23752944](https://doi.org/10.5281/zenodo.23752944).
 
-An archive with only an unversioned `main` link is less reproducible than the
-version/commit-specific package. The reserved DOI is **not** a scientific
-peer-review certificate. Future versions of the repository should be deposited
-as new versions, not silently substituted into this immutable citation.
+For an ongoing software project overview or link to all future archived
+versions, the **concept DOI** is:
+[10.5281/zenodo.23752943](https://doi.org/10.5281/zenodo.23752943).
+
+Use the two PhysioNet dataset DOIs separately if the underlying data were
+used. Source publication does not establish patient-level model validity,
+clinical safety or physician access to recorded measurements.
+
+**Important:** If future development changes files, do not imply the old
+Zenodo archive was changed. Create an explicitly versioned successor
+archive and update `CITATION.cff` for that version.
+
+The repository's main branch includes post-archive DOI/citation metadata
+changes, which are not present inside the frozen v0.3.0 ZIP.

@@ -55,18 +55,24 @@ those records is conferred by the public demos.
 - This is research software, **not** a medical device, patient-specific treatment
   recommendation, clinical sepsis-effect estimate or externally validated model.
 
-## Zenodo software deposit
+## Published Zenodo software archive and citations
 
-Zenodo's **record-level license should be MIT** when depositing this
-software-only source archive. Remove the default **CC BY 4.0** if it was
-preselected: that license is not a substitute for the MIT software grant,
-and would not relicense the third-party ODbL data.
+**Published research software:** Farshid Bagheri Saravi (2026).
+*Observation-Aware EHR Data: Temporal Provenance and Decision-Time Retrieval*
+(Version 0.3.0) [Computer software]. Zenodo.
+https://doi.org/10.5281/zenodo.23752944
 
-Reserved record DOI: **10.5281/zenodo.23752944**.
-This identifier is **reserved, not published or active for citation** until
-the Zenodo record is published. Once published, add the confirmed
-version-specific DOI to `CITATION.cff`, the README and the research documents.
-See [the deposit instructions](docs/ZENODO_RELEASE.md).
+- **Version-specific DOI:** https://doi.org/10.5281/zenodo.23752944
+- **All-versions concept DOI:** https://doi.org/10.5281/zenodo.23752943
+- **Software license in the deposited record:** MIT
+- **Source snapshot associated with the software deposit:**
+  https://github.com/Farshidbagheri/Observation-aware-ehr-data/tree/b9bcdc523d6416dec471699edfb8ede590a3378a
+- **Archive documentation:** [docs/ZENODO_RELEASE.md](docs/ZENODO_RELEASE.md)
+
+Zenodo's record-level MIT license applies to the author's original licensed
+software. The original public MIMIC source databases are separately offered
+under ODbL 1.0 and are not distributed inside this source ZIP.
+No DOI certifies peer review, clinical validation or external performance.
 
 The software author's MIT copyright statement is not a legal determination
 of institutional or coauthor rights. Public release is conditioned on the

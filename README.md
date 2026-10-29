@@ -1,5 +1,10 @@
 # Observation-Aware EHR Data
 
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23752944.svg)](https://doi.org/10.5281/zenodo.23752944)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**Archived research software v0.3.0:** [Zenodo DOI 10.5281/zenodo.23752944](https://doi.org/10.5281/zenodo.23752944) · [Permanent source snapshot](https://github.com/Farshidbagheri/Observation-aware-ehr-data/tree/b9bcdc523d6416dec471699edfb8ede590a3378a) · [Cite this software](CITATION.cff)
+
 **Temporal data provenance · Decision-time retrieval · Reproducible clinical data engineering**
 
 A research implementation for reconstructing and querying EHR event histories without conflating clinical event time with recorded information availability.
@@ -138,11 +143,21 @@ See [file and data rights](RIGHTS_AND_LICENSES.md).
 and [MIMIC-IV Clinical Database Demo 2.2](https://doi.org/10.13026/dp1f-ex47).
 Both should be cited separately when using the analyses.
 
-**Research software DOI:** `10.5281/zenodo.23752944` is **reserved for the planned
-Zenodo v0.3.0 software deposit**. It is **not yet published or citable**.
-After the Zenodo record is published, the confirmed software DOI and its
-version-specific metadata will be placed in [CITATION.cff](CITATION.cff) and
-here. [Zenodo deposit procedure](docs/ZENODO_RELEASE.md).
+**Citable, archived research software (v0.3.0):** Farshid Bagheri Saravi (2026).
+*Observation-Aware EHR Data: Temporal Provenance and Decision-Time Retrieval*
+(Version 0.3.0) [Computer software]. Zenodo.
+[https://doi.org/10.5281/zenodo.23752944](https://doi.org/10.5281/zenodo.23752944).
+
+- **Version-specific DOI (cite this release):** [10.5281/zenodo.23752944](https://doi.org/10.5281/zenodo.23752944).
+- **Concept DOI (cite the evolving project across versions):** [10.5281/zenodo.23752943](https://doi.org/10.5281/zenodo.23752943).
+- **Archived source revision:** [`b9bcdc52`](https://github.com/Farshidbagheri/Observation-aware-ehr-data/tree/b9bcdc523d6416dec471699edfb8ede590a3378a);
+  [successful CI verification](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40816116888).
+- **Citation metadata:** [`CITATION.cff`](CITATION.cff);
+  [archive details and versioning](docs/ZENODO_RELEASE.md).
+
+The software DOI identifies a reproducible research-software archive; it is
+**not** evidence of clinical validation, scientific peer review, or causal
+antibiotic-treatment effect estimation.
 
 ## Research outlook
 

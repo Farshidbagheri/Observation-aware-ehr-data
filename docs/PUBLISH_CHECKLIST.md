@@ -9,8 +9,9 @@
 - [ ] An independent reviewer signs off on figures, numerical denominators, and interpretations against the source tables.
 - [ ] A lockfile, environment image, and repeatability record have been archived.
 - [x] Original software MIT license text and third-party ODbL attribution are documented.
-- [ ] Author confirms authority to grant MIT rights under any institutional, employment, sponsor, or collaboration agreements.
-- [x] Data-source attribution and citation metadata are recorded; final archive release notes remain pending.
-- [ ] An immutable repository release is tagged and linked to an archive/DOI (if appropriate).
+- [x] Author states this is independently authored, non-sponsored code and has chosen MIT for original software. Review any contrary institutional/IP agreements if applicable.
+- [x] Dataset attribution and citation metadata are recorded; v0.3.0 Zenodo archive is published.
+- [x] Archived software has a version DOI and a pinned source commit: [Zenodo v0.3.0](https://doi.org/10.5281/zenodo.23752944), [source snapshot](https://github.com/Farshidbagheri/Observation-aware-ehr-data/tree/b9bcdc523d6416dec471699edfb8ede590a3378a).
+- [ ] Optional: create a GitHub v0.3.0 tag/release pointing to the archived snapshot (no tag is implied by the DOI).
 
-**Publication decision:** remain private pending authorization to release research code, choice of software license, and manual content review. The source data used are separately public under ODbL 1.0. The repository description and topics also need to be set in GitHub's About panel.  A citation file does not grant reuse rights. Do not publish MetroHealth or other restricted clinical data.
+**Publication status:** GitHub source is public and the v0.3.0 Zenodo software deposit is published under MIT. Remaining independent scientific review and dependency/environment locking are quality-improvement tasks, not claims of clinical validation. Do not publish restricted clinical data.
