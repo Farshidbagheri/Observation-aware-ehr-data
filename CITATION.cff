@@ -7,7 +7,6 @@ authors:
     family-names: Bagheri Saravi
     affiliation: Case Western Reserve University
 version: 0.3.0
-date-released: 2026-10-29
 repository-code: "https://github.com/Farshidbagheri/Observation-aware-ehr-data"
 keywords:
   - EHR
@@ -20,7 +19,7 @@ keywords:
   - data leakage
   - reproducible research
 abstract: >-
-  Open research code for documented event-time and availability-time semantics,
+  Research software for documented event-time and availability-time semantics,
   conservative public MIMIC-IV demo joins, decision-time-valid retrieval, and
   reproducible SQLite and MongoDB query evaluation. Not a clinical sepsis
   treatment recommendation or validated causal-effect estimator.
