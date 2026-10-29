@@ -1,0 +1,79 @@
+name: Research verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - 'pyproject.toml'
+      - '.github/workflows/research-verification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - run: pytest -q
+  live-mongodb-fixture-tests:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok'"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test,mongo]'
+      - name: Check SQLite and LIVE MongoDB parity on explicitly labeled test fixture
+        run: RUN_MONGO_TEST=1 pytest -q tests/test_mongo_live.py
+  real-public-demo-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok'"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install reproducible analysis dependencies
+        run: python -m pip install -e '.[test,mongo,analysis]'
+      - name: Fetch and SHA256-verify official open v2.2 demos
+        run: python scripts/fetch_demo.py --dataset both
+      - name: Prepare STRICT, source-preserving real EHR event histories
+        run: python -m obs_ehr prepare --mode strict --ed-dir data/raw/ed --hosp-dir data/raw/hosp --output outputs/events_strict.jsonl
+      - name: Execute real-demo SQLite/MongoDB matched workloads
+        run: python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend both --repeats 10 --max-stays 60 --output outputs/benchmark.json
+      - name: Generate descriptive (aggregate-only) report and 12 charts
+        run: python scripts/analyze_demo.py --events outputs/events_strict.jsonl
+      - name: Verify source dataset integrity and schema/test compatibility
+        run: pytest -q tests/test_analytics.py
+      - name: Publish aggregate-only artifacts (never raw patient data)
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-public-demo-aggregate-results
+          retention-days: 14
+          path: |
+            outputs/benchmark.json
+            reports/local/mimic_demo_profile.json
+            reports/local/figures/*.png
+            reports/local/figures/*.svg
