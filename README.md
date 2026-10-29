@@ -122,40 +122,22 @@ python -m obs_ehr benchmark --backend sqlite
 
 **Do not use fixture results in a fellowship application as measurements on MIMIC or real MongoDB.** The fixture is fictional, and the SQLite latency is local-environment-specific.
 
-## v0.2: Verified public-demo descriptive analysis (not causal modeling)
+## Reproducible public-data evidence
 
-Public-demo source archives supplied for this project were checked against their official source `SHA256SUMS.txt`: **6/6 ED and 31/31 clinical `.csv.gz` files matched**. On those real, de-identified files, strict-mode event normalization produced **4,548 events** (1,038 ED vital chart rows; 1,082 Pyxis dispensing rows; 1,833 hospital lab and 595 eMAR records conservatively matched into ED windows). Among these, 2,332 events have a hospital storage-time proxy; 2,216 have **unknown actual availability**. These counts describe the supplied 100-patient-demo source subsets, not a sepsis cohort.
+The 2026-10-29 publication workflow directly verifies **6/6 ED** and **31/31 clinical demo** CSV files against the official upstream SHA256 manifests. It then produces a seven-figure atlas and an inventory of all 37 table schemas from those real source files.
+
+The primary evidence is in `evidence/publication_atlas/`; its `index.html` opens locally and works without external image services. `aggregate_results.json` documents only defensible observation-process summaries and explicit `not_applicable` evaluation metrics; `all_source_schema_inventory.json` catalogs real source table structures.
 
 ```bash
 python -m pip install -e '.[test,analysis]'
 python scripts/fetch_demo.py --dataset both
-python -m obs_ehr prepare --mode strict --ed-dir data/raw/ed --hosp-dir data/raw/hosp --output outputs/events_strict.jsonl
-python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend sqlite --repeats 10 --max-stays 60 --output outputs/benchmark_strict_sqlite.json
-python scripts/analyze_demo.py
-pytest -q
+PYTHONPATH=.:src pytest -q tests/test_publication_atlas.py
+python scripts/publication_atlas.py
+python scripts/source_inventory.py
 ```
 
-The analysis generates **12 PNG/SVG plots** (`reports/local/figures`) and an aggregate-only JSON quality profile (`reports/local/mimic_demo_profile.json`). A versioned verified aggregate snapshot is in `evidence/real_mimic_demo_profile_v0.2.json`, with machine-specific SQLite numbers described separately in `evidence/LOCAL_SQLITE_RUN.md`. Running a local `docker compose up -d` and `--backend both` is needed for a **genuine MongoDB** performance comparison: the source workspace has not yet run it.
+To evaluate storage-engine correctness on the **same real public demo** rather than a synthetic fixture, run `python -m obs_ehr prepare --mode strict --ed-dir data/raw/ed --hosp-dir data/raw/hosp --output outputs/events_strict.jsonl` and then `python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend both` with an accessible MongoDB 7 instance.
 
-**What matters for researchers:** clinical histories in the real demos are not reliable counterfactual ground truth. The useful result here is an auditable, falsifiable **event-availability contract** and real descriptive audit. See [Protocol](docs/PROTOCOL.md) and [Engineering roadmap](docs/ENGINEERING_ROADMAP.md).
+### Research readiness
 
-
-## Verified visual evidence gallery
-
-These four previews are from the **actual deidentified public MIMIC-IV v2.2 demonstration datasets**, not synthetic patient cohorts. Browse all **12 SVG and PNG pairs** in [`evidence/figures/`](evidence/figures/) or open the [interactive aggregate-only dashboard](evidence/verified_demo_dashboard.html).
-
-| ED encounter duration | Vital measurement completeness |
-|---|---|
-| ![ED stay duration distribution](evidence/figures/03_ed_length_of_stay.png) | ![ED vital measurement field completeness](evidence/figures/05_vital_field_coverage.png) |
-| Hospital lab recording delay | Declared availability sources |
-| ![Hospital lab storage minus chart recording lag](evidence/figures/07_lab_recording_lag.png) | ![Availability provenance of canonical events](evidence/figures/09_availability_assumptions.png) |
-
-**Reading these charts:** source times are MIMIC-deidentified, hospital `storetime` is only a record-storage proxy, and no result here establishes patient-specific antibiotic benefit or clinician access time. The event-retrieval performance experiment is a separate engineering evaluation, not a clinical trial.
-
-### DOI and versioning
-
-Citation metadata is supplied in [`CITATION.cff`](CITATION.cff). **No DOI has been assigned to this repository yet.** Do not cite the separate GPU-Accelerated-Causal-ML DOI for this project. A release DOI should only be minted after reproducibility and licensing checks.
-
-## First verified GitHub Actions live-MongoDB result
-
-The [public-demo research verification run](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40795487976) **completed successfully** on a GitHub-hosted runner using a real MongoDB 7 service and the original public MIMIC demo data. **Both SQLite and MongoDB produced zero reference mismatches and zero future-availability leaks.** In this narrow, single-machine study, the measured query p50 was 0.0065 ms (SQLite in-process) versus 0.5517 ms (MongoDB via PyMongo). This is **not** a platform-wide database ranking; the client/database overhead and physical designs differ. See the full [CI measurement report](evidence/CI_LIVE_MONGODB_RESULTS.md) and [exact JSON results](evidence/real_demo_benchmark_ci_2026-10-29.json).
+This release is an observational EHR **data provenance and engineering** contribution. It is not yet a patient-specific sepsis-treatment-timing causal model. Supporting valid risk-from-waiting inference requires an approved, larger and outcome-linked ED cohort, documented time zero, verified administered antibiotic timestamps, longitudinal confounders, target-trial protocol, and causal sensitivity diagnostics. See [evaluation applicability](docs/EVALUATION_APPLICABILITY.md) and [research limitations](docs/RESEARCH_LIMITATIONS.md).
