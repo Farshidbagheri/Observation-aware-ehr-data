@@ -113,7 +113,7 @@ def figures(r,root):
     plt.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False,
         "savefig.dpi":300,"font.family":"DejaVu Sans"})
     def save(fig,name):
-        fig.text(.02,.01,"PUBLIC MIMIC v2.2 demos | descriptive only | no clinical treatment-effect inference",
+        fig.text(.02,-.035,"PUBLIC MIMIC v2.2 demos | descriptive only | no clinical treatment-effect inference",
             fontsize=8,color="#53677b")
         for ext in ("png","svg"):fig.savefig(root/(name+"."+ext),bbox_inches="tight",facecolor="white")
         plt.close(fig)
