@@ -6,12 +6,15 @@ authors:
   - given-names: Farshid
     family-names: Bagheri Saravi
     affiliation: Case Western Reserve University
-version: 0.2.0
-date-released: 2026-10-28
+version: 0.3.0
+date-released: 2026-10-29
 repository-code: "https://github.com/Farshidbagheri/Observation-aware-ehr-data"
 keywords:
   - EHR
   - MongoDB
+  - observation process
+  - MIMIC-IV
+  - scientific visualization
   - temporal data
   - clinical informatics
   - data leakage
