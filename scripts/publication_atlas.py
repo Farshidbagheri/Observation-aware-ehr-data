@@ -193,18 +193,29 @@ def figures(r,root):
     b.set_title("High-resolution histogram",loc="left")
     fig.suptitle("05 / LAB RECORDING LATENCY · NOT CLINICIAN VIEWING TIME",fontweight="bold")
     save(fig,"05_lab_recording_lag")
-    fig,ax=plt.subplots(figsize=(10,5));ax.set(xlim=(0,10),ylim=(0,4.5));ax.axis("off")
-    for j,(name,total,match) in enumerate([("labevents",r["n_hospital_labs"],r["matched_ed_window"]["labevents"]),
-         ("eMAR",r["n_hospital_emar"],r["matched_ed_window"]["emar"])]):
-        y=3.3-2*j
-        for x,c,label in [(0.1,"#213d57",f"{name} source\n{total:,} rows"),
-                          (3.5,"#106e73",f"Joined to ED time window\n{match:,} rows"),
-                          (7,"#8d585e",f"Unmatched\n{total-match:,} rows")]:
-            ax.text(x+1.3,y,label,ha="center",va="center",color="white",fontweight="bold",
-                bbox={"boxstyle":"round,pad=.6","fc":c,"ec":"none"})
-        ax.annotate("",xy=(3.35,y),xytext=(2.85,y),arrowprops={"arrowstyle":"->","lw":2})
-        ax.annotate("",xy=(6.85,y-.47),xytext=(2.85,y-.47),arrowprops={"arrowstyle":"->","lw":2,"connectionstyle":"arc3,rad=.14"})
-    ax.set_title("06 / CROSS-SYSTEM LINKAGE · record filtering, not care transitions",loc="left",pad=16)
+    # The source is partitioned into matched vs unmatched rows.
+    # Draw two outgoing branches; unmatched rows are NOT downstream of matched ones.
+    fig,ax=plt.subplots(figsize=(11,6),layout="constrained")
+    ax.set(xlim=(0,10),ylim=(0,4.6));ax.axis("off")
+    for j,(name,total,match) in enumerate([
+        ("labevents",r["n_hospital_labs"],r["matched_ed_window"]["labevents"]),
+        ("eMAR",r["n_hospital_emar"],r["matched_ed_window"]["emar"])
+    ]):
+        y=3.45-2.05*j
+        ax.text(2.0,y,f"{name} source\n{total:,} rows",ha="center",va="center",
+                color="white",fontweight="bold",
+                bbox={"boxstyle":"round,pad=.7","fc":"#213d57","ec":"none"})
+        ax.text(7.15,y+.44,f"Matched to ED interval\\n{match:,} rows",
+                ha="center",va="center",color="white",fontweight="bold",
+                bbox={"boxstyle":"round,pad=.65","fc":"#106e73","ec":"none"})
+        ax.text(7.15,y-.44,f"Not matched to ED interval\\n{total-match:,} rows",
+                ha="center",va="center",color="white",fontweight="bold",
+                bbox={"boxstyle":"round,pad=.65","fc":"#8d585e","ec":"none"})
+        for dy in (+.44,-.44):
+            ax.annotate("",xy=(5.12,y+dy),xytext=(3.25,y),
+                        arrowprops={"arrowstyle":"-|>","lw":2,"color":"#7893a4"})
+    ax.set_title("06 / CROSS-SYSTEM RECORD LINKAGE · two exclusive outcomes",
+                 loc="left",pad=16)
     save(fig,"06_cross_source_linkage")
     return sorted(p.name for p in root.glob("*.svg"))
 
