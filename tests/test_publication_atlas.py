@@ -35,3 +35,31 @@ def test_mimic_demo_real_source_and_cross_system_join():
     assert all(0<=n<=222 for n in report["at_risk_stays"])
     assert all(0<=v["fraction"]<=1 for arr in report["nonvital_record_by_bin"].values()
                for v in arr if v["fraction"] is not None)
+
+def test_metric_registry_complete_and_nonduplicated():
+    ids=[m["id"] for m in metric_status()]
+    assert len(ids)==len(set(ids))==16
+    assert set(ids)=={f"M{i:02d}" for i in range(1,11)} | {f"S{i:02d}" for i in range(1,7)}
+
+def test_wilson_interval_symmetry_near_half():
+    a,b=wilson(5,10)
+    assert a==pytest.approx(1-b,abs=.00001)
+
+def test_real_ed_subjects_and_at_risk_nonincreasing():
+    ed,hosp=Path("data/raw/ed"),Path("data/raw/hosp")
+    if not (ed/"edstays.csv.gz").exists() or not (hosp/"labevents.csv.gz").exists():
+        pytest.skip("Requires verified real public-demo source")
+    r=build(ed,hosp)
+    assert r["n_ed_subjects"]==64
+    assert r["at_risk_stays"]==sorted(r["at_risk_stays"],reverse=True)
+    assert r["at_risk_stays"]==[222,221,221,210,170,63]
+
+def test_real_recording_denominators_and_wilson_bounds():
+    ed,hosp=Path("data/raw/ed"),Path("data/raw/hosp")
+    if not (ed/"edstays.csv.gz").exists() or not (hosp/"labevents.csv.gz").exists():
+        pytest.skip("Requires verified real public-demo source")
+    r=build(ed,hosp)
+    assert len(r["vital_field_coverage"])==6
+    assert all(0<=x["fraction"]<=1 for x in r["vital_field_coverage"])
+    assert all(x["wilson95"][0]<=x["fraction"]<=x["wilson95"][1] for x in r["vital_field_coverage"])
+    assert all(sum(v is not None for v in row)>0 for row in r["vital_any_record_by_bin_rate"])
