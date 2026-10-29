@@ -11,6 +11,8 @@ import argparse
 import hashlib
 import json
 import urllib.request
+import urllib.error
+import time
 from pathlib import Path
 
 DATASETS={
@@ -26,6 +28,41 @@ DATASETS={
         "citation":"10.13026/dp1f-ex47"}
 }
 
+def _download_atomic(url: str, dest: Path, *, attempts: int = 5) -> None:
+    """Retrieve a public source file with bounded backoff and atomic publication.
+
+    Retry transient network errors, including HTTP 429/5xx. Do not store
+    incomplete responses at their destination filenames. The caller checks
+    the final bytes against the publisher's SHA-256 manifest.
+    """
+    if attempts < 1:
+        raise ValueError("attempts must be positive")
+    tmp = dest.with_name(dest.name + ".part")
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": "ObservationAwareEHR/ResearchPublicDemo"}
+            )
+            with urllib.request.urlopen(req, timeout=90) as response, tmp.open("wb") as f:
+                while chunk := response.read(131072):
+                    f.write(chunk)
+            if tmp.stat().st_size == 0:
+                raise OSError("Empty download")
+            tmp.replace(dest)
+            return
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as exc:
+            tmp.unlink(missing_ok=True)
+            # Client errors other than throttling are not transient.
+            if isinstance(exc, urllib.error.HTTPError) and exc.code < 500 and exc.code != 429:
+                raise
+            if attempt + 1 >= attempts:
+                raise
+            delay = min(2 ** attempt, 16)
+            print(f"Retrying {dest.name} after download error ({type(exc).__name__}); "
+                  f"attempt {attempt + 2}/{attempts}, backoff {delay}s", flush=True)
+            time.sleep(delay)
+
+
 def fetch(which:str,root:Path) -> dict:
     base=DATASETS[which]["base"]
     target_dir=root/which
@@ -35,13 +72,8 @@ def fetch(which:str,root:Path) -> dict:
         # Flatten hosp/ed source subfolder to simplify --ed-dir and --hosp-dir.
         dest=target_dir/Path(item).name
         url=base+item
-        if not dest.exists():
-            req=urllib.request.Request(url,headers={"User-Agent":"ObservationAwareEHR/0.1 (+public-data-only)"})
-            with urllib.request.urlopen(req,timeout=90) as r,dest.open("wb") as f:
-                while True:
-                    chunk=r.read(131072)
-                    if not chunk:break
-                    f.write(chunk)
+        if not dest.exists() or dest.stat().st_size == 0:
+            _download_atomic(url, dest)
         h=hashlib.sha256(dest.read_bytes()).hexdigest()
         status.append({"file":str(dest),"url":url,"sha256":h,"bytes":dest.stat().st_size})
     # Check downloaded content against the official source's SHA256SUMS.txt.
@@ -58,6 +90,14 @@ def fetch(which:str,root:Path) -> dict:
             continue
         if filename not in expected:
             raise ValueError(f"Official SHA256 manifest does not list {filename}")
+        if entry["sha256"].lower() != expected[filename]:
+            # A previous interrupted execution may have left old or damaged
+            # bytes on disk. Refetch only from the official publisher, then
+            # verify again before declaring this source usable.
+            path = Path(entry["file"])
+            _download_atomic(entry["url"], path)
+            entry["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+            entry["bytes"] = path.stat().st_size
         if entry["sha256"].lower() != expected[filename]:
             raise ValueError(f"SHA256 MISMATCH for {filename}: source may be corrupted or different version")
         entry["sha256_verified"] = True
