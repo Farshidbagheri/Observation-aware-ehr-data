@@ -205,10 +205,10 @@ def figures(r,root):
         ax.text(2.0,y,f"{name} source\n{total:,} rows",ha="center",va="center",
                 color="white",fontweight="bold",
                 bbox={"boxstyle":"round,pad=.7","fc":"#213d57","ec":"none"})
-        ax.text(7.15,y+.44,f"Matched to ED interval\\n{match:,} rows",
+        ax.text(7.15,y+.44,f"Matched to ED interval\n{match:,} rows",
                 ha="center",va="center",color="white",fontweight="bold",
                 bbox={"boxstyle":"round,pad=.65","fc":"#106e73","ec":"none"})
-        ax.text(7.15,y-.44,f"Not matched to ED interval\\n{total-match:,} rows",
+        ax.text(7.15,y-.44,f"Not matched to ED interval\n{total-match:,} rows",
                 ha="center",va="center",color="white",fontweight="bold",
                 bbox={"boxstyle":"round,pad=.65","fc":"#8d585e","ec":"none"})
         for dy in (+.44,-.44):
