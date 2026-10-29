@@ -7,6 +7,9 @@ on:
       - 'tests/test_publication_atlas.py'
       - '.github/workflows/publication-atlas.yml'
   workflow_dispatch:
+concurrency:
+  group: publication-atlas-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -51,4 +54,7 @@ jobs:
           git add -A -- evidence/publication_atlas
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Publish research-grade MIMIC observation atlas with audit evidence"
+          # Reconcile with newer main commits; never force-push.
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
