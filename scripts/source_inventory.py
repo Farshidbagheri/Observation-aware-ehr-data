@@ -6,7 +6,10 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from scripts.fetch_demo import DATASETS
+try:
+    from scripts.fetch_demo import DATASETS
+except ModuleNotFoundError:
+    from fetch_demo import DATASETS  # direct CLI: python scripts/source_inventory.py
 
 KEYS=("subject_id","hadm_id","stay_id","charttime","storetime")
 def inventory(root):
