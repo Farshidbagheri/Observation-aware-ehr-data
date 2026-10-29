@@ -12,7 +12,7 @@ The project is an observation-process and data-engineering study, not a sepsis d
 
 ## Statistics and visualization
 
-- The figure showing Wilson intervals assumes independent source rows, although patients contribute repeat vitalsign rows. These intervals must be read as **descriptive binomial reference intervals only**, not patient-cluster-corrected confidence limits. Cluster-resampling is a priority improvement.
+- The completeness plot uses 2,000 patient-cluster bootstrap replicates (fixed seed), which preserves within-patient repeated rows but does **not** correct sample selection or establish representative population uncertainty. Only patients with vitalsign rows contribute to these intervals.
 - Plots are exploratory and do not provide preregistered hypotheses, uncertainty from an external cohort or causal identification.
 - Sparse-cell suppression provides a simple precaution but is not a full disclosure-risk assessment for every possible derived output.
 - The dashboard requires local browser rendering, as GitHub's repository code view does not execute HTML.

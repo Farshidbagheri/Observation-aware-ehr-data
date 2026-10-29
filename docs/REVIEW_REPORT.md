@@ -8,7 +8,7 @@ Reviewed areas: scientific claims, data provenance, source licensing, repository
 | Dashboard access | GitHub shows `index.html` source, not a rendered site | Explain offline viewing and provide all figures directly in Markdown |
 | CI coverage | Unit and MongoDB jobs passed; full public-demo job failed from Python import path | Use `python -m pytest` with an explicit module path, plus repository integrity checks; CI must be rerun to confirm |
 | Documentation drift | Multiple old statements incorrectly said MongoDB had not been executed and referred to retired figure locations | Replace stale claims with independently linked run evidence and explicit limitations |
-| Statistical uncertainty | Wilson row intervals assume independent rows, violated by repeated EHR measurements | State descriptive-only interpretation; patient-cluster resampling remains necessary |
+| Statistical uncertainty | Original Wilson row intervals ignored within-patient correlation | Replaced with reproducible 2,000-resample patient-cluster percentile intervals; no population inference claimed |
 | Link integrity | Some historical HTML/image references and script names were stale | Replace links and add an offline relative-link gate |
 | Benchmark interpretation | SQLite and MongoDB have different service/serialization overhead | Retain measured results while refusing general superiority claims |
 | Medical validity | No adjudicated sepsis outcomes, validated treatment clocks, or causal identification | Exclude clinical treatment-effect claims, inappropriate model metrics and patient-level recommendations |
@@ -27,7 +27,7 @@ Reviewed areas: scientific claims, data provenance, source licensing, repository
 
 ## Highest-value next investigations
 
-- Replace naive row-level binomial uncertainty with patient-cluster bootstrap intervals and prespecified resampling parameters.
+- Independently assess patient-cluster bootstrap coverage and sensitivity to patient weighting, sparse cells, and selection from the small demo.
 - Add duplicate-event, contradictory timestamp, timestamp-ordering, join-coverage and selection-bias audit panels.
 - Implement documented time/version corrections and bitemporal as-of semantics with independent temporal-oracle checks.
 - Benchmark across dataset sizes and index configurations with controlled environments, query plans, cold/warm run separation, and confidence intervals across independent machines.

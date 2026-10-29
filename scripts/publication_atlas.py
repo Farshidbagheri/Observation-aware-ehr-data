@@ -22,12 +22,28 @@ NAMES=("Heart rate","Respiratory rate","SpO2","Systolic BP","Diastolic BP","Temp
 PALETTE=("#0d9488","#4361a8","#d6a15d","#ba718a")
 MIN_CELL=10
 
-def wilson(success,total,z=1.959963984540054):
-    if total<=0 or not 0<=success<=total: raise ValueError("Invalid binomial count")
-    p=success/total;z2=z*z;den=1+z2/total
-    mid=(p+z2/(2*total))/den
-    half=z*math.sqrt(p*(1-p)/total+z2/(4*total*total))/den
-    return [round(max(0,mid-half),5),round(min(1,mid+half),5)]
+def patient_cluster_interval(rows, field, *, replicates=2000, seed=2026):
+    """Percentile bootstrap of field completeness, resampling patients as clusters.
+
+    The target is source-row completeness in this *selected demo*, not a
+    confidence limit for an external patient population.
+    """
+    by_patient=defaultdict(lambda: [0, 0])
+    for row in rows:
+        patient=row["subject_id"]
+        by_patient[patient][0]+=1
+        by_patient[patient][1]+=int(bool(row.get(field,"").strip()))
+    clusters=np.asarray(list(by_patient.values()),dtype=np.int64)
+    if not len(clusters): raise ValueError("No patient clusters")
+    if replicates<100:raise ValueError("Too few bootstrap replicates")
+    rng=np.random.default_rng(seed)
+    samples=rng.integers(0,len(clusters),size=(replicates,len(clusters)))
+    totals=clusters[samples].sum(axis=1)
+    assert np.all(totals[:,0]>0)
+    rates=totals[:,1]/totals[:,0]
+    lo,hi=np.quantile(rates,[.025,.975])
+    return [round(float(lo),5),round(float(hi),5)],len(clusters)
+
 
 def ecdf(values):
     x=np.sort(np.asarray(values,dtype=float))
@@ -78,8 +94,10 @@ def build(ed,hosp):
     coverage=[]
     for f in FIELDS:
         n=sum(bool(v.get(f,"").strip()) for v in vit)
+        interval,clusters=patient_cluster_interval(vit,f)
         coverage.append({"field":f,"recorded":n,"denominator":len(vit),
-            "fraction":round(n/len(vit),5),"wilson95":wilson(n,len(vit))})
+            "fraction":round(n/len(vit),5),"patient_cluster_bootstrap95":interval,
+            "patients_with_vital_rows":clusters})
     matrix=[]
     for f in FIELDS:
         matrix.append([round(len(marks[f][j])/at_risk[j],5)
@@ -104,6 +122,8 @@ def build(ed,hosp):
        "matched_ed_window":joined,"time_bin_labels":LABELS,
        "at_risk_stays":at_risk,"vital_any_record_by_bin_rate":matrix,
        "vital_field_coverage":coverage,"nonvital_record_by_bin":series,
+       "uncertainty_method":{"name":"patient_cluster_percentile_bootstrap","resamples":2000,"seed":2026,
+           "unit":"subject_id","target":"field presence among source vital rows in selected demo"},
        "lab_record_lag_n":len(lag),"lab_store_missing_n":missing,
        "lab_store_before_chart_n":reverse,
        "_duration_minutes":list(dur.values()),"_lag_minutes":lag}
@@ -134,13 +154,13 @@ def figures(r,root):
     save(fig,"01_observation_atlas")
     fig,ax=plt.subplots(figsize=(10,5.5),layout="constrained")
     for y,(label,q) in enumerate(zip(NAMES[::-1],r["vital_field_coverage"][::-1])):
-        lo,hi=q["wilson95"]
+        lo,hi=q["patient_cluster_bootstrap95"]
         ax.plot([100*lo,100*hi],[y,y],color=PALETTE[1],lw=3)
         ax.scatter(100*q["fraction"],y,color=PALETTE[0],s=75,zorder=3)
         ax.text(100*hi+2,y,f"{q['recorded']}/{q['denominator']}",va="center")
     ax.set_yticks(range(6),NAMES[::-1]);ax.set_xlim(0,125)
     ax.set_xlabel("Completeness of source vitalsign rows (%)")
-    ax.set_title("02 / WILSON 95% INTERVALS · recorded-field proportions",loc="left",pad=14)
+    ax.set_title("02 / PATIENT-CLUSTER BOOTSTRAP · vital-field completeness",loc="left",pad=14)
     ax.grid(axis="x",alpha=.2);save(fig,"02_completeness_intervals")
     fig,ax=plt.subplots(figsize=(10,5.8),layout="constrained")
     for name,color in zip(("pyxis","labevents","emar"),PALETTE):
@@ -227,7 +247,7 @@ def main():
 - Time zero: ED arrival; no retrospectively inferred Sepsis-3 onset.
 - Denominator: ED stays still eligible at each time-bin start, not all source rows.
 - Small cells: suppressed if fewer than ten stays with a recorded observation.
-- Wilson 95% intervals: descriptive row-level coverage; repeated rows within stay are correlated, so these are not patient-level inferential confidence intervals.
+- Wilson 95% percentile intervals: 2,000 bootstrap replicates sampling patients (subject_id) with replacement, seed 2026; completeness is row-weighted within the selected demo. Not externally representative.
 - Pyxis is medication dispensing, not verified administration.
 - STORETIME is recording proxy and does not prove observation by a clinician.
 - No trained predictive model, adjudicated sepsis outcome, valid counterfactual policy evaluation, or external validation.

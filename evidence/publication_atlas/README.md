@@ -10,7 +10,7 @@
 
 ### Missingness and timing
 
-![Recorded field completeness](figures/02_completeness_intervals.png)
+![Patient-cluster bootstrap intervals for recorded vital-field completeness](figures/02_completeness_intervals.png)
 
 ![Temporal record density across sources](figures/03_temporal_recording.png)
 
