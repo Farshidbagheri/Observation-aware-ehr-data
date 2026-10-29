@@ -114,38 +114,3 @@ def _hist(x,bounds):
 def save_report(report:dict,out:Path):
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-
-
-def plot_gallery(profile:dict,root:Path):
-    """12 real-data figures. All derived from aggregate public-demo summaries."""
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.ticker import MaxNLocator
-    root.mkdir(parents=True,exist_ok=True)
-    plt.rcParams.update({'figure.dpi':130,'savefig.dpi':170,'font.size':10})
-    made=[]
-    def draw(name,title,xlabel,ylabel,fn,note='Public MIMIC-IV v2.2 demos · descriptive, not clinical inference'):
-        fig,ax=plt.subplots(figsize=(9,5.2),layout='constrained');fn(ax)
-        ax.set(title=title,xlabel=xlabel,ylabel=ylabel)
-        fig.text(.01,.004,note,fontsize=7,alpha=.75)
-        fig.savefig(root/f'{name}.png',bbox_inches='tight');fig.savefig(root/f'{name}.svg',bbox_inches='tight')
-        plt.close(fig);made.append(name)
-    r=profile
-    def hbar(ax, dic):
-        items=sorted(dic.items(),key=lambda v:v[1]);ax.barh([x[0] for x in items],[x[1] for x in items]);ax.xaxis.set_major_locator(MaxNLocator(integer=True));ax.grid(axis='x',alpha=.2)
-    draw('01_ed_table_volume','ED table coverage','Rows','',lambda ax:hbar(ax,r['ed_table_rows']))
-    draw('02_hospital_table_volume','Selected hospital table volumes','Rows','',lambda ax:hbar(ax,r['hospital_table_rows']))
-    hist=r['ed_stay_hours_hist']
-    draw('03_ed_length_of_stay','ED stay duration (hours)','Duration bins (hours)','Stays',lambda ax:ax.bar(hist['bins'],hist['counts']))
-    draw('04_triage_acuity','Triage acuity as recorded','Acuity code','Triage rows',lambda ax:ax.bar(list(r['triage_acuity']),list(r['triage_acuity'].values())))
-    draw('05_vital_field_coverage','Nonmissing entries in ED vitalsign','Rows','',lambda ax:hbar(ax,r['vital_field_nonmissing']))
-    hh=r['vital_chart_hour'];draw('06_vital_hourly_charting','ED vital-sign chart timestamps by clock hour','Hour of shifted charttime','Records',lambda ax:ax.plot(list(hh),list(hh.values()),marker='o'))
-    bins=r['hospital_lab_store_lag_bins'];draw('07_lab_recording_lag','All-hospital lab storage-minus-chart lag','Lag bins (minutes)','Lab records',lambda ax:ax.bar(bins['bins'],bins['counts']))
-    data=r['normalized_events_by_type'];draw('08_event_type_mix','Normalized ED-window event types','Event type','Records',lambda ax:ax.bar(list(data),list(data.values())))
-    av=r['normalized_events_by_availability_assumption'];draw('09_availability_assumptions','Recorded availability assumptions','Events','',lambda ax:hbar(ax,av))
-    match=r['hospital_ed_window_matches'];draw('10_hospital_ed_matches','Hospital records matched to ED windows','Events','',lambda ax:hbar(ax,match))
-    pct={k:round(100*v,2) for k,v in r['hospital_ed_window_join_fraction'].items()};draw('11_hospital_match_rates','Hospital-to-ED window match fraction','Percent of hospital rows','',lambda ax:hbar(ax,pct))
-    landmark=r['available_event_counts_across_ed_landmarks_minutes'];draw('12_decision_landmark_information','Events stored by time after ED arrival (proxy only)','Minutes since ED arrival','Available event returns',lambda ax:ax.step([int(k) for k in landmark],list(landmark.values()),where='post'))
-    (root/'README.md').write_text('# Verified public-demo descriptive figures\n\n'+'\n'.join(f'- `{n}.png` / `{n}.svg`' for n in made)+'\n\nNo individual patient records or clinical recommendations.\n')
-    return made
