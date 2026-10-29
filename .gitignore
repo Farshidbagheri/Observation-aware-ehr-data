@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+.coverage
+.env
+*.log
+# Protect raw datasets and derived patient-level data; only fixture tests are committed.
+data/raw/
+outputs/
+*.sqlite
+*.db
+*.parquet
+reports/local/
+reports/**/figures/
+_bootstrap/
+.DS_Store
+*.zip
+# Never commit patient-level information or hospital/IRB controlled data.
+*.csv
+*.csv.gz
+*.jsonl

@@ -1,0 +1,164 @@
+{
+  "study": "mimic-iv-ed-demo-2.2+clinical-demo-2.2",
+  "analysis_scope": "descriptive data quality and decision-time storage semantics only",
+  "data_origins": "real-world deidentified public demo; no synthetic rows included",
+  "ed_table_rows": {
+    "edstays": 222,
+    "vitalsign": 1038,
+    "pyxis": 1082,
+    "triage": 222,
+    "diagnosis": 545,
+    "medrecon": 2764
+  },
+  "hospital_table_rows": {
+    "patients": 100,
+    "admissions": 275,
+    "labevents": 107727,
+    "emar": 35835
+  },
+  "unique_ed_patients": 64,
+  "unique_ed_stays": 222,
+  "ed_stay_hours": {
+    "count": 222,
+    "p10": 2.799,
+    "p25": 4.221,
+    "median": 5.842,
+    "p75": 8.768,
+    "p90": 15.72,
+    "p95": 20.617
+  },
+  "ed_stay_hours_hist": {
+    "bins": [
+      "0–1",
+      "1–2",
+      "2–4",
+      "4–6",
+      "6–8",
+      "8–12",
+      "12–24",
+      "≥24"
+    ],
+    "counts": [
+      1,
+      11,
+      40,
+      62,
+      45,
+      32,
+      25,
+      6
+    ]
+  },
+  "triage_acuity": {
+    "1": 18,
+    "2": 97,
+    "3": 90,
+    "4": 2,
+    "unknown": 15
+  },
+  "vital_field_nonmissing": {
+    "temperature": 579,
+    "heartrate": 1008,
+    "resprate": 990,
+    "o2sat": 971,
+    "sbp": 998,
+    "dbp": 998,
+    "pain": 736
+  },
+  "vital_row_total": 1038,
+  "vital_chart_hour": {
+    "00": 47,
+    "01": 39,
+    "02": 27,
+    "03": 23,
+    "04": 27,
+    "05": 25,
+    "06": 49,
+    "07": 25,
+    "08": 22,
+    "09": 30,
+    "10": 33,
+    "11": 28,
+    "12": 25,
+    "13": 36,
+    "14": 54,
+    "15": 57,
+    "16": 69,
+    "17": 69,
+    "18": 67,
+    "19": 49,
+    "20": 53,
+    "21": 56,
+    "22": 64,
+    "23": 64
+  },
+  "hospital_lab_store_lag_minutes": {
+    "count": 106735,
+    "p10": 13.0,
+    "p25": 39.0,
+    "median": 65.0,
+    "p75": 102.0,
+    "p90": 177.0,
+    "p95": 296.3
+  },
+  "hospital_lab_store_lag_bins": {
+    "bins": [
+      "0–5",
+      "5–15",
+      "15–30",
+      "30–60",
+      "60–120",
+      "120–240",
+      "240–480",
+      "480–1440",
+      "≥1440"
+    ],
+    "counts": [
+      7908,
+      3041,
+      8324,
+      28571,
+      38531,
+      13201,
+      4937,
+      1797,
+      425
+    ]
+  },
+  "hospital_lab_store_lag_sample_size": 106735,
+  "hospital_lab_missing_storetime": 992,
+  "hospital_lab_storetime_before_charttime": 0,
+  "normalized_events_by_type": {
+    "emar": 595,
+    "labevents": 1833,
+    "pyxis": 1082,
+    "vitalsign": 1038
+  },
+  "normalized_events_by_availability_assumption": {
+    "storetime_proxy": 2332,
+    "unknown": 2216
+  },
+  "hospital_ed_window_matches": {
+    "emar": 595,
+    "labevents": 1833
+  },
+  "hospital_ed_window_join_fraction": {
+    "labevents": 0.017015,
+    "emar": 0.016604
+  },
+  "available_event_counts_across_ed_landmarks_minutes": {
+    "0": 0,
+    "30": 44,
+    "60": 294,
+    "120": 950,
+    "240": 1693
+  },
+  "landmark_scope": "sum across all ED stays; event release uses declared storage proxy only",
+  "cautions": [
+    "ED source charttime is not verified clinician access time",
+    "Hospital storetime is data-storage proxy, not a clinician-observation timestamp",
+    "Pyxis is dispensing, not confirmed medication administration",
+    "Not a clinically validated sepsis cohort and no antibiotic effect estimates",
+    "Individual patient rows and timestamps never enter this aggregate report"
+  ]
+}
