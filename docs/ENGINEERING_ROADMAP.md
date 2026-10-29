@@ -1,21 +1,29 @@
-# Engineering roadmap with evidence-gated milestones
+# Engineering roadmap
 
-## Implemented locally, v0.2
+### Implemented and evidence-linked
 
-- Strict source-preserving canonical ledger for ED vitals/Pyxis and conservative hospital labevents/eMAR joins
-- Availability provenance (`unknown`, `storetime_proxy`, explicit `charttime_proxy` or artificial delay)
-- Independent as-of reference, SQLite query parity, optional real MongoDB query engine
-- Configurable CLI, Docker Compose and CI integration definition
-- Aggregate-only offline report, 12 descriptive graph types, dataset checksum verification
+- Deterministic source acquisition and public-demo SHA-256 checks.
+- ED event normalization with strict and explicitly hypothesized availability proxies.
+- Conservative laboratory/eMAR linkage within ED encounter windows.
+- Python as-of oracle and indexed SQLite/MongoDB retrieval with measured parity checks.
+- Descriptive observation-process atlas using seven PNG/SVG figures and 37 source-table inventory.
+- Private, reproducible GitHub Actions verification; local-only patient-level data.
 
-## Required before scientific publication or DOI claims
+### Next: technical validity
 
-- Run live MongoDB integration and publish exact execution provenance, repeat across hardware and database versions
-- Add append-only bitemporal history with observed correction metadata and test revision visibility
-- Introduce normalized relational schema comparable to a document-oriented representation; current SQLite JSON table is not a full relational-DB comparison
-- Pre-register cohort/time-zero and outcome definitions, sample-size/positivity checks, sensitivity analyses
-- Add ethical review, artifact checksums, source provenance, CITATION.cff, software licensing approval and archive release
+- Fix and maintain green comprehensive CI, repository-link regression checks, and reproducibility manifests.
+- Replace row-level Wilson uncertainty with patient-cluster resampling where appropriate.
+- Add full timestamp contradiction, duplicate-key, selection/attrition and time-origin sensitivity audits.
+- Support correction lineage with an append-only revision log; test *valid time* and *recorded time* separately.
+- Build a properly normalized SQL comparator, examine query plans, and characterize scaling, caching, and deployment costs.
 
-## Explicit exclusions
+### Next: dissertation integration
 
-No invented EHR encounters, timestamps, antibiotic administration, sepsis outcomes, effect sizes, model accuracy or claim of improved patient care.
+- Use only an approved, adequately powered clinical ED cohort with documented timing, treatments and outcomes.
+- Specify causal estimands and target trial eligibility before causal modeling.
+- Fit and validate temporal confounding-adjustment methods with positivity, censoring, calibration and sensitivity diagnostics.
+- Distinguish clinical expert plausibility review from actual prospective evaluation.
+
+### Before archival release or DOI
+
+Complete attribution and intellectual-property review, select an approved software license, freeze dependency versions, verify all charts against a recorded commit and dataset manifests, re-run independent-machine reproduction, and archive the exact release. The dataset's ODbL terms are distinct from the software license.
