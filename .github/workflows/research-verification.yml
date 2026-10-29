@@ -63,10 +63,12 @@ jobs:
         run: python -m obs_ehr prepare --mode strict --ed-dir data/raw/ed --hosp-dir data/raw/hosp --output outputs/events_strict.jsonl
       - name: Execute real-demo SQLite/MongoDB matched workloads
         run: python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend both --repeats 10 --max-stays 60 --output outputs/benchmark.json
-      - name: Generate descriptive (aggregate-only) report and 12 charts
-        run: python scripts/analyze_demo.py --events outputs/events_strict.jsonl
+      - name: Generate audited publication atlas from real public-demo tables
+        run: |
+          python scripts/publication_atlas.py
+          python scripts/source_inventory.py
       - name: Verify source dataset integrity and schema/test compatibility
-        run: pytest -q tests/test_analytics.py
+        run: pytest -q tests/test_analytics.py tests/test_publication_atlas.py
       - name: Publish aggregate-only artifacts (never raw patient data)
         uses: actions/upload-artifact@v4
         with:
@@ -74,6 +76,8 @@ jobs:
           retention-days: 14
           path: |
             outputs/benchmark.json
-            reports/local/mimic_demo_profile.json
-            reports/local/figures/*.png
-            reports/local/figures/*.svg
+            evidence/publication_atlas/aggregate_results.json
+            evidence/publication_atlas/all_source_schema_inventory.json
+            evidence/publication_atlas/QA.md
+            evidence/publication_atlas/figures/*.png
+            evidence/publication_atlas/figures/*.svg
