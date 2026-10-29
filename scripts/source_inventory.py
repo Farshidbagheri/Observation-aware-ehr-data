@@ -43,7 +43,7 @@ def plot(results,target):
     ax.set_xticks(range(len(KEYS)),KEYS,rotation=0)
     ax.set_title("07 / CROSS-DATASET SCHEMA FINGERPRINT\nAll 37 verified public-demo CSV sources",loc="left",pad=18,fontsize=13,fontweight="bold")
     fig.colorbar(im,ax=ax,shrink=.35,label="Non-empty fraction among rows (grey = column absent)")
-    fig.text(.02,.005,"Source fields only, not clinician-observable decision-time data. Grey is not a missing clinical measurement.",fontsize=8)
+    fig.text(.02,-.025,"Source fields only, not clinician-observable decision-time data. Grey is not a missing clinical measurement.",fontsize=8)
     target.parent.mkdir(parents=True,exist_ok=True)
     for ext in ("png","svg"):fig.savefig(target.with_suffix("."+ext),dpi=300,bbox_inches="tight")
     plt.close(fig)
