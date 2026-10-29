@@ -1,0 +1,59 @@
+{
+  "schema_version": "research-benchmark-1.0",
+  "produced_by": "GitHub Actions real-public-demo-audit",
+  "run_id": 40795487976,
+  "run_url": "https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40795487976",
+  "run_date_utc": "2026-10-29",
+  "os": "GitHub-hosted ubuntu-latest runner",
+  "python": "3.11",
+  "mongodb_service": "mongo:7.0",
+  "dataset_provenance": [
+    "mimic-iv-clinical-demo-v2.2",
+    "mimic-iv-ed-demo-v2.2"
+  ],
+  "public_demo_source": "PhysioNet; files downloaded with SHA256 verification",
+  "observation_mode": "strict",
+  "event_count": 4548,
+  "availability_source_counts": {
+    "unknown": 2216,
+    "storetime_proxy": 2332
+  },
+  "queries": 120,
+  "repetitions": 10,
+  "benchmark_version": "0.1.0",
+  "latency_ms": {
+    "sqlite": {
+      "ingest_ms": 54.885,
+      "p50": 0.0065,
+      "p95": 0.0719,
+      "n_measurements": 1200
+    },
+    "mongodb": {
+      "ingest_ms": 73.758,
+      "p50": 0.5517,
+      "p95": 0.6565,
+      "n_measurements": 1200
+    }
+  },
+  "correctness": {
+    "sqlite": {
+      "mismatched_queries": 0,
+      "future_available_leaks": 0,
+      "unknown_availability_visible": 0,
+      "event_returns": 3080
+    },
+    "mongodb": {
+      "mismatched_queries": 0,
+      "future_available_leaks": 0,
+      "unknown_availability_visible": 0,
+      "event_returns": 3080
+    }
+  },
+  "limitations": [
+    "This is one GitHub Actions run, not a statistically powered multi-host benchmark.",
+    "The baseline SQLite table stores JSON text and is not a feature-equivalent normalized relational database design.",
+    "MongoDB is accessed through PyMongo localhost socket, whereas SQLite is accessed in-process: the cost models and network/client layers differ.",
+    "The workload is a narrow indexed as-of event retrieval task; no inference on universal database performance.",
+    "storetime_proxy is not proof of clinician visibility. The source demo does not yield valid clinical timing effect estimates."
+  ]
+}

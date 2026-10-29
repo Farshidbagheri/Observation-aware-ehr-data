@@ -122,3 +122,7 @@ These four previews are from the **actual deidentified public MIMIC-IV v2.2 demo
 ### DOI and versioning
 
 Citation metadata is supplied in [`CITATION.cff`](CITATION.cff). **No DOI has been assigned to this repository yet.** Do not cite the separate GPU-Accelerated-Causal-ML DOI for this project. A release DOI should only be minted after reproducibility and licensing checks.
+
+## First verified GitHub Actions live-MongoDB result
+
+The [public-demo research verification run](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40795487976) **completed successfully** on a GitHub-hosted runner using a real MongoDB 7 service and the original public MIMIC demo data. **Both SQLite and MongoDB produced zero reference mismatches and zero future-availability leaks.** In this narrow, single-machine study, the measured query p50 was 0.0065 ms (SQLite in-process) versus 0.5517 ms (MongoDB via PyMongo). This is **not** a platform-wide database ranking; the client/database overhead and physical designs differ. See the full [CI measurement report](evidence/CI_LIVE_MONGODB_RESULTS.md) and [exact JSON results](evidence/real_demo_benchmark_ci_2026-10-29.json).
