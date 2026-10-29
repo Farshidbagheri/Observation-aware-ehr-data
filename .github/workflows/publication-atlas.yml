@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/publication_atlas.py'
+      - 'scripts/source_inventory.py'
       - 'tests/test_publication_atlas.py'
       - '.github/workflows/publication-atlas.yml'
   workflow_dispatch:
@@ -29,15 +30,20 @@ jobs:
         run: PYTHONPATH=.:src pytest -q tests/test_publication_atlas.py
       - name: Generate aggregate-only reproducible atlas and QA report
         run: python scripts/publication_atlas.py
+      - name: Audit all 37 real source tables and plot schema fingerprint
+        run: python scripts/source_inventory.py
       - name: Audit publication artifact contracts
         shell: bash
         run: |
-          test "$(find evidence/publication_atlas/figures -name '*.png' | wc -l)" -eq 6
-          test "$(find evidence/publication_atlas/figures -name '*.svg' | wc -l)" -eq 6
+          test "$(find evidence/publication_atlas/figures -name '*.png' | wc -l)" -eq 7
+          test "$(find evidence/publication_atlas/figures -name '*.svg' | wc -l)" -eq 7
           python - <<'PY'
           import json
           from pathlib import Path
           x=json.loads(Path('evidence/publication_atlas/aggregate_results.json').read_text())
+          import json
+          schema=json.loads(Path('evidence/publication_atlas/all_source_schema_inventory.json').read_text())
+          assert schema['n_csv_tables']==37
           assert x['n_ed_stays']==222
           assert len(x['evaluation_applicability'])==16
           assert all(y['value'] is None for y in x['evaluation_applicability'])
