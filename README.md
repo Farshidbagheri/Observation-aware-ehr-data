@@ -105,3 +105,20 @@ pytest -q
 The analysis generates **12 PNG/SVG plots** (`reports/local/figures`) and an aggregate-only JSON quality profile (`reports/local/mimic_demo_profile.json`). A versioned verified aggregate snapshot is in `evidence/real_mimic_demo_profile_v0.2.json`, with machine-specific SQLite numbers described separately in `evidence/LOCAL_SQLITE_RUN.md`. Running a local `docker compose up -d` and `--backend both` is needed for a **genuine MongoDB** performance comparison: the source workspace has not yet run it.
 
 **What matters for researchers:** clinical histories in the real demos are not reliable counterfactual ground truth. The useful result here is an auditable, falsifiable **event-availability contract** and real descriptive audit. See [Protocol](docs/PROTOCOL.md) and [Engineering roadmap](docs/ENGINEERING_ROADMAP.md).
+
+
+## Verified visual evidence gallery
+
+These four previews are from the **actual deidentified public MIMIC-IV v2.2 demonstration datasets**, not synthetic patient cohorts. Browse all **12 SVG and PNG pairs** in [`evidence/figures/`](evidence/figures/) or open the [interactive aggregate-only dashboard](evidence/verified_demo_dashboard.html).
+
+| ED encounter duration | Vital measurement completeness |
+|---|---|
+| ![ED stay duration distribution](evidence/figures/03_ed_length_of_stay.png) | ![ED vital measurement field completeness](evidence/figures/05_vital_field_coverage.png) |
+| Hospital lab recording delay | Declared availability sources |
+| ![Hospital lab storage minus chart recording lag](evidence/figures/07_lab_recording_lag.png) | ![Availability provenance of canonical events](evidence/figures/09_availability_assumptions.png) |
+
+**Reading these charts:** source times are MIMIC-deidentified, hospital `storetime` is only a record-storage proxy, and no result here establishes patient-specific antibiotic benefit or clinician access time. The event-retrieval performance experiment is a separate engineering evaluation, not a clinical trial.
+
+### DOI and versioning
+
+Citation metadata is supplied in [`CITATION.cff`](CITATION.cff). **No DOI has been assigned to this repository yet.** Do not cite the separate GPU-Accelerated-Causal-ML DOI for this project. A release DOI should only be minted after reproducibility and licensing checks.
