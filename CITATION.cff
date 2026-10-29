@@ -6,7 +6,6 @@ authors:
   - given-names: Farshid
     family-names: Bagheri Saravi
     affiliation: Case Western Reserve University
-version: 0.3.0
 repository-code: "https://github.com/Farshidbagheri/Observation-aware-ehr-data"
 keywords:
   - EHR

@@ -1,6 +1,10 @@
 # Observation-Aware EHR Data
 
-**Auditable event histories, observation timing, and reproducible evaluation for clinical data engineering**
+**Temporal data provenance · Decision-time retrieval · Reproducible clinical data engineering**
+
+A research implementation for reconstructing and querying EHR event histories without conflating clinical event time with recorded information availability.
+
+**Study status:** Reproduced on public MIMIC-IV demonstration data. Not clinically validated.
 
 **Researcher and maintainer:** Farshid Bagheri Saravi  
 **Affiliation:** Department of Electrical, Computer and Systems Engineering, Case Western Reserve University  
@@ -12,7 +16,7 @@
 
 Electronic health records contain multiple timestamps that represent different events: measurement, documentation, storage, and possible information availability. Treating them as interchangeable can contaminate retrospective decision-time analyses.
 
-This repository implements an **observation-aware event model** and compares indexed as-of retrieval in SQLite and MongoDB against an independent reference. It also provides an independently reproducible descriptive atlas of the two **public MIMIC-IV demonstration datasets**. The data-engineering work supports, but does not constitute, a causal model of antibiotic timing in sepsis.
+This repository implements an **observation-aware event model** and compares indexed as-of retrieval in SQLite and MongoDB against an independent reference. It also provides a CI-reproduced descriptive atlas of the two **public MIMIC-IV demonstration datasets**. The data-engineering work supports, but does not constitute, a causal model of antibiotic timing in sepsis.
 
 | Public-demo evidence | Verified scope |
 |:--|--:|
@@ -85,7 +89,7 @@ python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend both -
 
 Generated plots and the local HTML dashboard live in `evidence/publication_atlas/`. **GitHub's file viewer displays HTML source rather than executing the dashboard.** To interact with it, [download the repository as ZIP](https://github.com/Farshidbagheri/Observation-aware-ehr-data/archive/refs/heads/main.zip), extract it, and open `evidence/publication_atlas/index.html` in a web browser. The original SVG images must remain in the adjacent `figures/` directory. The repository is currently private, so GitHub sign-in is required.
 
-[Verified CI run for the atlas](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40801312279) · [Independent SQLite/MongoDB benchmark evidence](evidence/CI_LIVE_MONGODB_RESULTS.md). Live CI status and results should be checked in [Actions](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions); an earlier successful run is not a permanent build-status assertion.
+[Successful real-data verification](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105789) · [Successful atlas reproduction](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105595) · [Measured SQLite/MongoDB benchmark](evidence/CI_LIVE_MONGODB_RESULTS.md). Inspect [GitHub Actions](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions) for the current status of later commits.
 
 ## What the implementation establishes
 
@@ -118,5 +122,5 @@ docs/                    Protocol, architecture, figure interpretation and limit
 .github/workflows/       Research verification and reproducibility automation
 ```
 
-**Citation:** [CITATION.cff](CITATION.cff). **Independent critical review:** [review findings and remaining work](docs/REVIEW_REPORT.md).
+**Citation:** [CITATION.cff](CITATION.cff). **Technical audit:** [review findings and remaining work](docs/REVIEW_REPORT.md). **Release readiness:** [publication checklist](docs/PUBLISH_CHECKLIST.md).
 

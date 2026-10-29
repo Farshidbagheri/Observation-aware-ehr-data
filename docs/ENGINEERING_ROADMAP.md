@@ -11,8 +11,8 @@
 
 ### Next: technical validity
 
-- Fix and maintain green comprehensive CI, repository-link regression checks, and reproducibility manifests.
-- Replace row-level Wilson uncertainty with patient-cluster resampling where appropriate.
+- Maintain green comprehensive CI and repository-link regression checks; archive exact dependency versions and reproducibility manifests.
+- Evaluate the implemented patient-cluster bootstrap's small-sample performance and sensitivity to alternative patient/row weighting.
 - Add full timestamp contradiction, duplicate-key, selection/attrition and time-origin sensitivity audits.
 - Support correction lineage with an append-only revision log; test *valid time* and *recorded time* separately.
 - Build a properly normalized SQL comparator, examine query plans, and characterize scaling, caching, and deployment costs.
