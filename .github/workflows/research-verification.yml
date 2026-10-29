@@ -9,6 +9,9 @@ on:
       - 'pyproject.toml'
       - '.github/workflows/research-verification.yml'
   workflow_dispatch:
+concurrency:
+  group: research-verification-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
