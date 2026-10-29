@@ -10,7 +10,7 @@ A research implementation for reconstructing and querying EHR event histories wi
 **Affiliation:** Department of Electrical, Computer and Systems Engineering, Case Western Reserve University  
 **Research context:** Temporal clinical informatics and causal machine learning for treatment-timing research
 
-[Research methods](docs/PROTOCOL.md) · [Figures and interpretation](docs/FIGURES.md) · [Engineering architecture](docs/ARCHITECTURE.md) · [Verification](evidence/VERIFICATION.md) · [Limitations](docs/RESEARCH_LIMITATIONS.md) · [Citation](CITATION.cff)
+[Research methods](docs/PROTOCOL.md) · [Figures and interpretation](docs/FIGURES.md) · [Engineering architecture](docs/ARCHITECTURE.md) · [Verification](evidence/VERIFICATION.md) · [Limitations](docs/RESEARCH_LIMITATIONS.md) · [Citation](CITATION.cff) · [Data rights](RIGHTS_AND_LICENSES.md)
 
 ## Overview
 
@@ -87,7 +87,7 @@ python -m obs_ehr prepare --mode strict --ed-dir data/raw/ed --hosp-dir data/raw
 python -m obs_ehr benchmark --input outputs/events_strict.jsonl --backend both --repeats 10 --max-stays 60 --output outputs/benchmark.json
 ```
 
-Generated plots and the local HTML dashboard live in `evidence/publication_atlas/`. **GitHub's file viewer displays HTML source rather than executing the dashboard.** To interact with it, [download the repository as ZIP](https://github.com/Farshidbagheri/Observation-aware-ehr-data/archive/refs/heads/main.zip), extract it, and open `evidence/publication_atlas/index.html` in a web browser. The original SVG images must remain in the adjacent `figures/` directory. The repository is currently private, so GitHub sign-in is required.
+Generated plots and the local HTML dashboard live in `evidence/publication_atlas/`. **GitHub's file viewer displays HTML source rather than executing the dashboard.** To interact with it, [download the repository as ZIP](https://github.com/Farshidbagheri/Observation-aware-ehr-data/archive/refs/heads/main.zip), extract it, and open `evidence/publication_atlas/index.html` in a web browser. The original SVG images must remain in the adjacent `figures/` directory. While the repository remains private, GitHub sign-in is required.
 
 [Successful real-data verification](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105789) · [Successful atlas reproduction](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105595) · [Measured SQLite/MongoDB benchmark](evidence/CI_LIVE_MONGODB_RESULTS.md). Inspect [GitHub Actions](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions) for the current status of later commits.
 
@@ -105,7 +105,7 @@ The distinguishing engineering contribution here is a **testable observation-ava
 
 **Not implemented or validated:** clinician-view timestamps, full bitemporal corrections, clinically adjudicated suspected-sepsis eligibility, patient-specific optimal antibiotic treatment timing, prospective decision support, or external clinical validation. A small public demo cannot substantiate model discrimination, SHAP attributions, survival calibration, or causal policy benefit. See the [metric applicability review](docs/EVALUATION_APPLICABILITY.md).
 
-The public MIMIC-IV-ED and MIMIC-IV clinical demos are attributed to their [PhysioNet ED source](https://physionet.org/content/mimic-iv-ed-demo/2.2/) and [clinical source](https://physionet.org/content/mimic-iv-demo/2.2/). Their **ODbL 1.0 data licensing is separate from the software**. Raw tables, patient-level derivatives, and restricted health-system data are not committed. Software license selection remains subject to institutional/IP review; no license is implied by the presence of a citation file.
+The public MIMIC-IV-ED and MIMIC-IV clinical demos are attributed to their [PhysioNet ED source](https://physionet.org/content/mimic-iv-ed-demo/2.2/) and [clinical source](https://physionet.org/content/mimic-iv-demo/2.2/). Their **ODbL 1.0 data licensing is separate from the software**. Raw tables, patient-level derivatives, and restricted health-system data are not committed. Original research software is distributed under the [MIT License](LICENSE) insofar as the author holds licensing rights; the source data retain ODbL 1.0. [Rights and attribution](RIGHTS_AND_LICENSES.md).
 
 ## Project structure
 
@@ -122,5 +122,44 @@ docs/                    Protocol, architecture, figure interpretation and limit
 .github/workflows/       Research verification and reproducibility automation
 ```
 
-**Citation:** [CITATION.cff](CITATION.cff). **Technical audit:** [review findings and remaining work](docs/REVIEW_REPORT.md). **Release readiness:** [publication checklist](docs/PUBLISH_CHECKLIST.md).
+**Technical audit:** [review findings and remaining work](docs/REVIEW_REPORT.md). **Release readiness:** [publication checklist](docs/PUBLISH_CHECKLIST.md).
+
+## Data, licensing and citation
+
+**Original software:** [MIT License](LICENSE), copyright © 2026 Farshid Bagheri Saravi,
+subject to the author's rights to license the code. **Public MIMIC-IV demonstration
+data:** [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/);
+this repository does **not** ship the clinical source tables. Derived figures are
+attributed to the original datasets and do not authorize redistribution of
+credential-restricted clinical records.
+See [file and data rights](RIGHTS_AND_LICENSES.md).
+
+**Dataset citations:** [MIMIC-IV-ED Demo 2.2](https://doi.org/10.13026/jzz5-vs76)
+and [MIMIC-IV Clinical Database Demo 2.2](https://doi.org/10.13026/dp1f-ex47).
+Both should be cited separately when using the analyses.
+
+**Research software DOI:** `10.5281/zenodo.23752944` is **reserved for the planned
+Zenodo v0.3.0 software deposit**. It is **not yet published or citable**.
+After the Zenodo record is published, the confirmed software DOI and its
+version-specific metadata will be placed in [CITATION.cff](CITATION.cff) and
+here. [Zenodo deposit procedure](docs/ZENODO_RELEASE.md).
+
+## Research outlook
+
+The next research phase will evaluate correction-aware event histories,
+alternative information-availability assumptions, and repeated workload
+benchmarking with well-specified SQL and MongoDB storage representations.
+A future causal study of antibiotic-initiation timing would additionally
+require an authorized outcome-linked cohort, adjudicated exposures, an
+explicit target-trial estimand, and independent clinical validation.
+These are **planned investigations**, not results of the public-demo atlas.
+[Roadmap](docs/ENGINEERING_ROADMAP.md).
+
+*Farshid Bagheri Saravi · Case Western Reserve University*
+
+[Website](https://www.farshidbagheri.com) ·
+[Google Scholar](https://scholar.google.com/citations?user=cnkhpngAAAAJ) ·
+[ORCID](https://orcid.org/0000-0003-4213-5053) ·
+[LinkedIn](https://www.linkedin.com/in/farshidbagherisaravi)
+
 

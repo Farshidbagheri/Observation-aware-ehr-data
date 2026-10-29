@@ -1,11 +1,14 @@
 cff-version: 1.2.0
 message: "If you use this research software, please cite the repository and the specific release or archived DOI, when available."
 type: software
-title: "Observation-Aware EHR Data: Auditable Decision-Time Histories"
+version: 0.3.0
+license: MIT
+title: "Observation-Aware EHR Data: Temporal Provenance and Decision-Time Retrieval"
 authors:
   - given-names: Farshid
     family-names: Bagheri Saravi
     affiliation: Case Western Reserve University
+url: "https://github.com/Farshidbagheri/Observation-aware-ehr-data"
 repository-code: "https://github.com/Farshidbagheri/Observation-aware-ehr-data"
 keywords:
   - EHR

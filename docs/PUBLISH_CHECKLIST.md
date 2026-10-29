@@ -8,7 +8,8 @@
 - [x] Both code-validation and atlas workflows completed successfully for the validated source revision ([research](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105789), [atlas](https://github.com/Farshidbagheri/Observation-aware-ehr-data/actions/runs/40804105595)). Check any newer commit separately.
 - [ ] An independent reviewer signs off on figures, numerical denominators, and interpretations against the source tables.
 - [ ] A lockfile, environment image, and repeatability record have been archived.
-- [ ] Institutional intellectual-property and software licensing are reviewed and approved.
+- [x] Original software MIT license text and third-party ODbL attribution are documented.
+- [ ] Author confirms authority to grant MIT rights under any institutional, employment, sponsor, or collaboration agreements.
 - [x] Data-source attribution and citation metadata are recorded; final archive release notes remain pending.
 - [ ] An immutable repository release is tagged and linked to an archive/DOI (if appropriate).
 
