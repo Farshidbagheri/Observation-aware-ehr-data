@@ -1,0 +1,354 @@
+{
+  "study": "MIMIC-IV ED Demo 2.2 + Clinical Demo 2.2",
+  "task_profile": "no_predictive_model",
+  "n_ed_stays": 222,
+  "n_ed_subjects": 64,
+  "n_vitalsign_rows": 1038,
+  "n_pyxis_rows": 1082,
+  "n_hospital_labs": 107727,
+  "n_hospital_emar": 35835,
+  "matched_ed_window": {
+    "labevents": 1833,
+    "emar": 595
+  },
+  "time_bin_labels": [
+    "0–30m",
+    "30–60m",
+    "1–2h",
+    "2–4h",
+    "4–8h",
+    "8+h"
+  ],
+  "at_risk_stays": [
+    222,
+    221,
+    221,
+    210,
+    170,
+    63
+  ],
+  "vital_any_record_by_bin_rate": [
+    [
+      0.59459,
+      0.15837,
+      0.29864,
+      0.6619,
+      0.81765,
+      0.74603
+    ],
+    [
+      0.59459,
+      0.15837,
+      0.28959,
+      0.6619,
+      0.81176,
+      0.74603
+    ],
+    [
+      0.58559,
+      0.14932,
+      0.27602,
+      0.62857,
+      0.8,
+      0.74603
+    ],
+    [
+      0.5991,
+      0.1629,
+      0.29412,
+      0.6619,
+      0.81765,
+      0.74603
+    ],
+    [
+      0.5991,
+      0.1629,
+      0.29412,
+      0.6619,
+      0.81765,
+      0.74603
+    ],
+    [
+      0.54054,
+      0.05882,
+      0.06335,
+      0.45238,
+      0.65294,
+      0.69841
+    ]
+  ],
+  "vital_field_coverage": [
+    {
+      "field": "heartrate",
+      "recorded": 1008,
+      "denominator": 1038,
+      "fraction": 0.9711,
+      "wilson95": [
+        0.95904,
+        0.97968
+      ]
+    },
+    {
+      "field": "resprate",
+      "recorded": 990,
+      "denominator": 1038,
+      "fraction": 0.95376,
+      "wilson95": [
+        0.93922,
+        0.96495
+      ]
+    },
+    {
+      "field": "o2sat",
+      "recorded": 971,
+      "denominator": 1038,
+      "fraction": 0.93545,
+      "wilson95": [
+        0.91884,
+        0.94885
+      ]
+    },
+    {
+      "field": "sbp",
+      "recorded": 998,
+      "denominator": 1038,
+      "fraction": 0.96146,
+      "wilson95": [
+        0.94795,
+        0.97157
+      ]
+    },
+    {
+      "field": "dbp",
+      "recorded": 998,
+      "denominator": 1038,
+      "fraction": 0.96146,
+      "wilson95": [
+        0.94795,
+        0.97157
+      ]
+    },
+    {
+      "field": "temperature",
+      "recorded": 579,
+      "denominator": 1038,
+      "fraction": 0.5578,
+      "wilson95": [
+        0.52743,
+        0.58775
+      ]
+    }
+  ],
+  "nonvital_record_by_bin": {
+    "pyxis": [
+      {
+        "n_stays": 29,
+        "eligible_stays": 222,
+        "fraction": 0.13063
+      },
+      {
+        "n_stays": 26,
+        "eligible_stays": 221,
+        "fraction": 0.11765
+      },
+      {
+        "n_stays": 57,
+        "eligible_stays": 221,
+        "fraction": 0.25792
+      },
+      {
+        "n_stays": 97,
+        "eligible_stays": 210,
+        "fraction": 0.4619
+      },
+      {
+        "n_stays": 78,
+        "eligible_stays": 170,
+        "fraction": 0.45882
+      },
+      {
+        "n_stays": 33,
+        "eligible_stays": 63,
+        "fraction": 0.52381
+      }
+    ],
+    "labevents": [
+      {
+        "n_stays": 11,
+        "eligible_stays": 222,
+        "fraction": 0.04955
+      },
+      {
+        "n_stays": 14,
+        "eligible_stays": 221,
+        "fraction": 0.06335
+      },
+      {
+        "n_stays": 15,
+        "eligible_stays": 221,
+        "fraction": 0.06787
+      },
+      {
+        "n_stays": 15,
+        "eligible_stays": 210,
+        "fraction": 0.07143
+      },
+      {
+        "n_stays": null,
+        "eligible_stays": 170,
+        "fraction": null
+      },
+      {
+        "n_stays": null,
+        "eligible_stays": 63,
+        "fraction": null
+      }
+    ],
+    "emar": [
+      {
+        "n_stays": null,
+        "eligible_stays": 222,
+        "fraction": null
+      },
+      {
+        "n_stays": 12,
+        "eligible_stays": 221,
+        "fraction": 0.0543
+      },
+      {
+        "n_stays": 32,
+        "eligible_stays": 221,
+        "fraction": 0.1448
+      },
+      {
+        "n_stays": 50,
+        "eligible_stays": 210,
+        "fraction": 0.2381
+      },
+      {
+        "n_stays": 56,
+        "eligible_stays": 170,
+        "fraction": 0.32941
+      },
+      {
+        "n_stays": 34,
+        "eligible_stays": 63,
+        "fraction": 0.53968
+      }
+    ]
+  },
+  "lab_record_lag_n": 106735,
+  "lab_store_missing_n": 992,
+  "lab_store_before_chart_n": 0,
+  "evaluation_applicability": [
+    {
+      "id": "M01",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M02",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M03",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M04",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M05",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M06",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M07",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M08",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M09",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "M10",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No trained prediction model, adjudicated ED clinical outcome, disjoint test predictions, or identifiable causal estimand in this descriptive demo."
+    },
+    {
+      "id": "S01",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    },
+    {
+      "id": "S02",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    },
+    {
+      "id": "S03",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    },
+    {
+      "id": "S04",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    },
+    {
+      "id": "S05",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    },
+    {
+      "id": "S06",
+      "status": "not_applicable",
+      "value": null,
+      "reason": "No validated signal reference, event annotations, imaging mask, or survival/competing-risk reference."
+    }
+  ],
+  "figure_ids": {
+    "V01": "implemented_as_aggregated_observation_matrix",
+    "V02": "not_applicable_no_validated_embedding",
+    "V03": "implemented_as_aggregated_record_linkage_flow",
+    "V04": "not_applicable_no_fitted_prediction_model",
+    "V05": "not_applicable_no_attention_model"
+  },
+  "quality_gate": {
+    "fabricated_patient_rows": false,
+    "outcome_estimates": false,
+    "small_heatmap_cells_suppressed": true,
+    "publication_use": "exploratory_only"
+  }
+}

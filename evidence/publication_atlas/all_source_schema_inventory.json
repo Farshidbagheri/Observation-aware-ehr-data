@@ -1,0 +1,813 @@
+{
+  "task": "descriptive_public_demo_schema_audit",
+  "source_versions": {
+    "ed": "MIMIC-IV-ED-Demo 2.2",
+    "clinical": "MIMIC-IV-Clinical-Demo 2.2"
+  },
+  "n_csv_tables": 37,
+  "tables": [
+    {
+      "table": "ed/edstays",
+      "n_records": 222,
+      "n_columns": 9,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "intime",
+        "outtime",
+        "gender",
+        "race",
+        "arrival_transport",
+        "disposition"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 0.77477,
+        "stay_id": 1.0
+      }
+    },
+    {
+      "table": "ed/vitalsign",
+      "n_records": 1038,
+      "n_columns": 11,
+      "columns": [
+        "subject_id",
+        "stay_id",
+        "charttime",
+        "temperature",
+        "heartrate",
+        "resprate",
+        "o2sat",
+        "sbp",
+        "dbp",
+        "rhythm",
+        "pain"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0
+      }
+    },
+    {
+      "table": "ed/pyxis",
+      "n_records": 1082,
+      "n_columns": 7,
+      "columns": [
+        "subject_id",
+        "stay_id",
+        "charttime",
+        "med_rn",
+        "name",
+        "gsn_rn",
+        "gsn"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0
+      }
+    },
+    {
+      "table": "ed/triage",
+      "n_records": 222,
+      "n_columns": 11,
+      "columns": [
+        "subject_id",
+        "stay_id",
+        "temperature",
+        "heartrate",
+        "resprate",
+        "o2sat",
+        "sbp",
+        "dbp",
+        "pain",
+        "acuity",
+        "chiefcomplaint"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "stay_id": 1.0
+      }
+    },
+    {
+      "table": "ed/medrecon",
+      "n_records": 2764,
+      "n_columns": 9,
+      "columns": [
+        "subject_id",
+        "stay_id",
+        "charttime",
+        "name",
+        "gsn",
+        "ndc",
+        "etc_rn",
+        "etccode",
+        "etcdescription"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0
+      }
+    },
+    {
+      "table": "ed/diagnosis",
+      "n_records": 545,
+      "n_columns": 6,
+      "columns": [
+        "subject_id",
+        "stay_id",
+        "seq_num",
+        "icd_code",
+        "icd_version",
+        "icd_title"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "stay_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/admissions",
+      "n_records": 275,
+      "n_columns": 16,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "admittime",
+        "dischtime",
+        "deathtime",
+        "admission_type",
+        "admit_provider_id",
+        "admission_location",
+        "discharge_location",
+        "insurance",
+        "language",
+        "marital_status",
+        "race",
+        "edregtime",
+        "edouttime",
+        "hospital_expire_flag"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/d_hcpcs",
+      "n_records": 89200,
+      "n_columns": 4,
+      "columns": [
+        "code",
+        "category",
+        "long_description",
+        "short_description"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/d_icd_diagnoses",
+      "n_records": 109775,
+      "n_columns": 3,
+      "columns": [
+        "icd_code",
+        "icd_version",
+        "long_title"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/d_icd_procedures",
+      "n_records": 85257,
+      "n_columns": 3,
+      "columns": [
+        "icd_code",
+        "icd_version",
+        "long_title"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/d_labitems",
+      "n_records": 1622,
+      "n_columns": 4,
+      "columns": [
+        "itemid",
+        "label",
+        "fluid",
+        "category"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/diagnoses_icd",
+      "n_records": 4506,
+      "n_columns": 5,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "seq_num",
+        "icd_code",
+        "icd_version"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/drgcodes",
+      "n_records": 454,
+      "n_columns": 7,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "drg_type",
+        "drg_code",
+        "description",
+        "drg_severity",
+        "drg_mortality"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/emar",
+      "n_records": 35835,
+      "n_columns": 12,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "emar_id",
+        "emar_seq",
+        "poe_id",
+        "pharmacy_id",
+        "enter_provider_id",
+        "charttime",
+        "medication",
+        "event_txt",
+        "scheduletime",
+        "storetime"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 0.97193,
+        "charttime": 1.0,
+        "storetime": 1.0
+      }
+    },
+    {
+      "table": "hosp/emar_detail",
+      "n_records": 72018,
+      "n_columns": 33,
+      "columns": [
+        "subject_id",
+        "emar_id",
+        "emar_seq",
+        "parent_field_ordinal",
+        "administration_type",
+        "pharmacy_id",
+        "barcode_type",
+        "reason_for_no_barcode",
+        "complete_dose_not_given",
+        "dose_due",
+        "dose_due_unit",
+        "dose_given",
+        "dose_given_unit",
+        "will_remainder_of_dose_be_given",
+        "product_amount_given",
+        "product_unit",
+        "product_code",
+        "product_description",
+        "product_description_other",
+        "prior_infusion_rate",
+        "infusion_rate",
+        "infusion_rate_adjustment",
+        "infusion_rate_adjustment_amount",
+        "infusion_rate_unit",
+        "route",
+        "infusion_complete",
+        "completion_interval",
+        "new_iv_bag_hung",
+        "continued_infusion_in_other_location",
+        "restart_interval",
+        "side",
+        "site",
+        "non_formulary_visual_verification"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/hcpcsevents",
+      "n_records": 61,
+      "n_columns": 6,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "chartdate",
+        "hcpcs_cd",
+        "seq_num",
+        "short_description"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/labevents",
+      "n_records": 107727,
+      "n_columns": 16,
+      "columns": [
+        "labevent_id",
+        "subject_id",
+        "hadm_id",
+        "specimen_id",
+        "itemid",
+        "order_provider_id",
+        "charttime",
+        "storetime",
+        "value",
+        "valuenum",
+        "valueuom",
+        "ref_range_lower",
+        "ref_range_upper",
+        "flag",
+        "priority",
+        "comments"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 0.73618,
+        "charttime": 1.0,
+        "storetime": 0.99079
+      }
+    },
+    {
+      "table": "hosp/microbiologyevents",
+      "n_records": 2899,
+      "n_columns": 25,
+      "columns": [
+        "microevent_id",
+        "subject_id",
+        "hadm_id",
+        "micro_specimen_id",
+        "order_provider_id",
+        "chartdate",
+        "charttime",
+        "spec_itemid",
+        "spec_type_desc",
+        "test_seq",
+        "storedate",
+        "storetime",
+        "test_itemid",
+        "test_name",
+        "org_itemid",
+        "org_name",
+        "isolate_num",
+        "quantity",
+        "ab_itemid",
+        "ab_name",
+        "dilution_text",
+        "dilution_comparison",
+        "dilution_value",
+        "interpretation",
+        "comments"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 0.66506,
+        "charttime": 0.93687,
+        "storetime": 0.99448
+      }
+    },
+    {
+      "table": "hosp/omr",
+      "n_records": 2964,
+      "n_columns": 5,
+      "columns": [
+        "subject_id",
+        "chartdate",
+        "seq_num",
+        "result_name",
+        "result_value"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/patients",
+      "n_records": 100,
+      "n_columns": 6,
+      "columns": [
+        "subject_id",
+        "gender",
+        "anchor_age",
+        "anchor_year",
+        "anchor_year_group",
+        "dod"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/pharmacy",
+      "n_records": 15306,
+      "n_columns": 27,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "pharmacy_id",
+        "poe_id",
+        "starttime",
+        "stoptime",
+        "medication",
+        "proc_type",
+        "status",
+        "entertime",
+        "verifiedtime",
+        "route",
+        "frequency",
+        "disp_sched",
+        "infusion_type",
+        "sliding_scale",
+        "lockout_interval",
+        "basal_rate",
+        "one_hr_max",
+        "doses_per_24_hrs",
+        "duration",
+        "duration_interval",
+        "expiration_value",
+        "expiration_unit",
+        "expirationdate",
+        "dispensation",
+        "fill_quantity"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/poe",
+      "n_records": 45154,
+      "n_columns": 12,
+      "columns": [
+        "poe_id",
+        "poe_seq",
+        "subject_id",
+        "hadm_id",
+        "ordertime",
+        "order_type",
+        "order_subtype",
+        "transaction_type",
+        "discontinue_of_poe_id",
+        "discontinued_by_poe_id",
+        "order_provider_id",
+        "order_status"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/poe_detail",
+      "n_records": 3795,
+      "n_columns": 5,
+      "columns": [
+        "poe_id",
+        "poe_seq",
+        "subject_id",
+        "field_name",
+        "field_value"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/prescriptions",
+      "n_records": 18087,
+      "n_columns": 21,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "pharmacy_id",
+        "poe_id",
+        "poe_seq",
+        "order_provider_id",
+        "starttime",
+        "stoptime",
+        "drug_type",
+        "drug",
+        "formulary_drug_cd",
+        "gsn",
+        "ndc",
+        "prod_strength",
+        "form_rx",
+        "dose_val_rx",
+        "dose_unit_rx",
+        "form_val_disp",
+        "form_unit_disp",
+        "doses_per_24_hrs",
+        "route"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/procedures_icd",
+      "n_records": 722,
+      "n_columns": 6,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "seq_num",
+        "chartdate",
+        "icd_code",
+        "icd_version"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/provider",
+      "n_records": 40508,
+      "n_columns": 1,
+      "columns": [
+        "provider_id"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/services",
+      "n_records": 319,
+      "n_columns": 5,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "transfertime",
+        "prev_service",
+        "curr_service"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/transfers",
+      "n_records": 1190,
+      "n_columns": 7,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "transfer_id",
+        "eventtype",
+        "careunit",
+        "intime",
+        "outtime"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 0.95462
+      }
+    },
+    {
+      "table": "hosp/caregiver",
+      "n_records": 15468,
+      "n_columns": 1,
+      "columns": [
+        "caregiver_id"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/chartevents",
+      "n_records": 668862,
+      "n_columns": 11,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "charttime",
+        "storetime",
+        "itemid",
+        "value",
+        "valuenum",
+        "valueuom",
+        "warning"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0,
+        "storetime": 0.99827
+      }
+    },
+    {
+      "table": "hosp/d_items",
+      "n_records": 4014,
+      "n_columns": 9,
+      "columns": [
+        "itemid",
+        "label",
+        "abbreviation",
+        "linksto",
+        "category",
+        "unitname",
+        "param_type",
+        "lownormalvalue",
+        "highnormalvalue"
+      ],
+      "key_nonmissing_fraction": {}
+    },
+    {
+      "table": "hosp/datetimeevents",
+      "n_records": 15280,
+      "n_columns": 10,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "charttime",
+        "storetime",
+        "itemid",
+        "value",
+        "valueuom",
+        "warning"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0,
+        "storetime": 1.0
+      }
+    },
+    {
+      "table": "hosp/icustays",
+      "n_records": 140,
+      "n_columns": 8,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "first_careunit",
+        "last_careunit",
+        "intime",
+        "outtime",
+        "los"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0
+      }
+    },
+    {
+      "table": "hosp/ingredientevents",
+      "n_records": 25728,
+      "n_columns": 17,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "starttime",
+        "endtime",
+        "storetime",
+        "itemid",
+        "amount",
+        "amountuom",
+        "rate",
+        "rateuom",
+        "orderid",
+        "linkorderid",
+        "statusdescription",
+        "originalamount",
+        "originalrate"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "storetime": 1.0
+      }
+    },
+    {
+      "table": "hosp/inputevents",
+      "n_records": 20404,
+      "n_columns": 26,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "starttime",
+        "endtime",
+        "storetime",
+        "itemid",
+        "amount",
+        "amountuom",
+        "rate",
+        "rateuom",
+        "orderid",
+        "linkorderid",
+        "ordercategoryname",
+        "secondaryordercategoryname",
+        "ordercomponenttypedescription",
+        "ordercategorydescription",
+        "patientweight",
+        "totalamount",
+        "totalamountuom",
+        "isopenbag",
+        "continueinnextdept",
+        "statusdescription",
+        "originalamount",
+        "originalrate"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "storetime": 1.0
+      }
+    },
+    {
+      "table": "hosp/outputevents",
+      "n_records": 9362,
+      "n_columns": 9,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "charttime",
+        "storetime",
+        "itemid",
+        "value",
+        "valueuom"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "charttime": 1.0,
+        "storetime": 1.0
+      }
+    },
+    {
+      "table": "hosp/procedureevents",
+      "n_records": 1468,
+      "n_columns": 22,
+      "columns": [
+        "subject_id",
+        "hadm_id",
+        "stay_id",
+        "caregiver_id",
+        "starttime",
+        "endtime",
+        "storetime",
+        "itemid",
+        "value",
+        "valueuom",
+        "location",
+        "locationcategory",
+        "orderid",
+        "linkorderid",
+        "ordercategoryname",
+        "ordercategorydescription",
+        "patientweight",
+        "isopenbag",
+        "continueinnextdept",
+        "statusdescription",
+        "ORIGINALAMOUNT",
+        "ORIGINALRATE"
+      ],
+      "key_nonmissing_fraction": {
+        "subject_id": 1.0,
+        "hadm_id": 1.0,
+        "stay_id": 1.0,
+        "storetime": 1.0
+      }
+    }
+  ]
+}
