@@ -111,7 +111,7 @@ def build(ed,hosp):
 def figures(r,root):
     root.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False,
-        "savefig.dpi":180,"font.family":"DejaVu Sans"})
+        "savefig.dpi":300,"font.family":"DejaVu Sans"})
     def save(fig,name):
         fig.text(.02,.01,"PUBLIC MIMIC v2.2 demos | descriptive only | no clinical treatment-effect inference",
             fontsize=8,color="#53677b")
@@ -183,7 +183,7 @@ def figures(r,root):
             ax.text(x+1.3,y,label,ha="center",va="center",color="white",fontweight="bold",
                 bbox={"boxstyle":"round,pad=.6","fc":c,"ec":"none"})
         ax.annotate("",xy=(3.35,y),xytext=(2.85,y),arrowprops={"arrowstyle":"->","lw":2})
-        ax.annotate("",xy=(6.85,y),xytext=(6.4,y),arrowprops={"arrowstyle":"->","lw":2})
+        ax.annotate("",xy=(6.85,y-.47),xytext=(2.85,y-.47),arrowprops={"arrowstyle":"->","lw":2,"connectionstyle":"arc3,rad=.14"})
     ax.set_title("06 / CROSS-SYSTEM LINKAGE · record filtering, not care transitions",loc="left",pad=16)
     save(fig,"06_cross_source_linkage")
     return sorted(p.name for p in root.glob("*.svg"))
@@ -195,7 +195,7 @@ def dashboard(r,names,path):
     items=[("ED stays",r["n_ed_stays"]),("ED patients",r["n_ed_subjects"]),
            ("Vital rows",r["n_vitalsign_rows"]),("ED-linked lab rows",r["matched_ed_window"]["labevents"])]
     boxes="".join(f"<div class='k'><small>{escape(k)}</small><strong>{v:,}</strong></div>" for k,v in items)
-    html='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Observation Atlas · MIMIC v2.2 demo</title><style>:root{font:16px system-ui;color:#152c41;background:#edf3f7}body{margin:0}header{padding:3em 5vw;background:linear-gradient(110deg,#142940,#087c7d);color:white}header h1{font-size:clamp(2em,5vw,4em);margin:.25em 0}header p{max-width:800px;color:#d5f2f1;line-height:1.6}main{max-width:1250px;margin:auto;padding:2em}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1em}.k,article,aside{background:white;border-radius:14px;padding:1.1em;box-shadow:0 8px 32px #0a304011}.k small{display:block;color:#60758a}.k strong{font-size:2em}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,530px),1fr));gap:1.4em;margin-top:1.5em}article img{width:100%}article h2{font-size:1em}aside{margin-top:1.4em;border-left:5px solid #087c7d}footer{text-align:center;padding:2em;color:#64748b}</style><header><div>REPRODUCIBLE CLINICAL DATA ENGINEERING · PUBLIC MIMIC DEMOS</div><h1>Observation Atlas</h1><p>What was recorded, when, and how EHR events link across systems. Every figure is generated from real deidentified public-demo records with explicitly described denominators. Not a diagnosis system or causal treatment model.</p></header><main><div class="kpis">__BOXES__</div><aside><strong>Scientific validity boundary:</strong> charttime ≠ clinician availability; storetime ≠ verified clinician access; Pyxis dispensing ≠ drug administration. Suppressed small cells are not biological negatives. No model accuracy, causal effect or clinical benefit is claimed.</aside><div class="gallery">__CARDS__</div></main><footer>MIMIC-IV-ED Demo 2.2 and MIMIC-IV Demo 2.2 · ODbL 1.0 · Research use only</footer></html>'''
+    html='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Observation Atlas · MIMIC v2.2 demo</title><style>:root{font:16px system-ui;color:#152c41;background:#edf3f7}body{margin:0}header{padding:3em 5vw;background:linear-gradient(110deg,#142940,#087c7d);color:white}header h1{font-size:clamp(2em,5vw,4em);margin:.25em 0}header p{max-width:800px;color:#d5f2f1;line-height:1.6}main{max-width:1250px;margin:auto;padding:2em}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1em}.k,article,aside{background:white;border-radius:14px;padding:1.1em;box-shadow:0 8px 32px #0a304011}.k small{display:block;color:#60758a}.k strong{font-size:2em}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,530px),1fr));gap:1.4em;margin-top:1.5em}article img{width:100%}article h2{font-size:1em}aside{margin-top:1.4em;border-left:5px solid #087c7d}footer{text-align:center;padding:2em;color:#64748b}</style><header><div>REPRODUCIBLE CLINICAL DATA ENGINEERING · PUBLIC MIMIC DEMOS</div><h1>Observation Atlas</h1><p>What was recorded, when, and how EHR events link across systems. Every figure is generated from real deidentified public-demo records with explicitly described denominators. Not a diagnosis system or causal treatment model.</p></header><main><div class="kpis">__BOXES__</div><aside><strong>Scientific validity boundary:</strong> charttime ≠ clinician availability; storetime ≠ verified clinician access; Pyxis dispensing ≠ drug administration. Suppressed small cells are not biological negatives. No model accuracy, causal effect or clinical benefit is claimed.</aside><div class="tools"><label for="figure-search">Explore research figures</label> <input id="figure-search" aria-label="Filter figure titles" type="search" placeholder="Search: temporal, observation, linkage…" autocomplete="off"></div><div class="gallery">__CARDS__</div><dialog id="lightbox" aria-label="Expanded scientific figure"><button id="close" type="button">Close enlarged figure ×</button><img alt="" style="display:block;max-width:95vw;max-height:85vh;width:auto" id="expanded"></dialog></main><script>const box=document.getElementById("lightbox"),expanded=document.getElementById("expanded");document.querySelectorAll(".gallery article img").forEach(el=>{el.tabIndex=0;el.style.cursor="zoom-in";const show=()=>{expanded.src=el.src;expanded.alt=el.alt;box.showModal()};el.addEventListener("click",show);el.addEventListener("keydown",e=>{if(e.key==="Enter")show()})});document.getElementById("close").addEventListener("click",()=>box.close());document.getElementById("figure-search").addEventListener("input",e=>document.querySelectorAll(".gallery article").forEach(card=>{card.hidden=!card.textContent.toLowerCase().includes(e.target.value.toLowerCase())}));</script><footer>MIMIC-IV-ED Demo 2.2 and MIMIC-IV Demo 2.2 · ODbL 1.0 · Research use only</footer></html>'''
     path.write_text(html.replace("__BOXES__",boxes).replace("__CARDS__",cards),encoding="utf-8")
 
 def main():
@@ -206,6 +206,9 @@ def main():
     a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
     r=build(a.ed_dir,a.hosp_dir)
     clean={k:v for k,v in r.items() if not k.startswith("_")}
+    # Suppress small bin-level counts in machine-readable public results, not only figures.
+    clean["nonvital_record_by_bin"]={name:[{**q,"n_stays":None if q["n_stays"]<MIN_CELL else q["n_stays"]}
+       for q in series] for name,series in clean["nonvital_record_by_bin"].items()}
     clean["evaluation_applicability"]=metric_status()
     clean["figure_ids"]={"V01":"implemented_as_aggregated_observation_matrix",
         "V02":"not_applicable_no_validated_embedding",
