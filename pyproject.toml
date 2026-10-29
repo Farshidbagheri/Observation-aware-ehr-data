@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "observation-aware-ehr-data"
-version = "0.1.0"
-description = "Research demonstrator of decision-time-valid EHR event histories using SQLite and MongoDB"
+version = "0.3.0"
+description = "Observation-aware clinical event histories, reproducible data audits and as-of retrieval evaluation"
 requires-python = ">=3.10"
 dependencies = []
 

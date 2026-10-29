@@ -1,17 +1,31 @@
-# Study design and validity limitations
+# Research limitations and nonclaims
 
-1. **Clinical question:** individualized, uncertainty-qualified timing of first antibiotic *administration* in suspected ED sepsis. This pilot does not estimate it.
-2. **Information availability:** ED `vitalsign.charttime` = chart event time; actual physician availability may differ. `labevents.storetime` and `emar.storetime` can be used as *record-storage* proxies, not guaranteed read times. Selection of `unknown` vs `proxy` vs `synthetic` is explicit.
-3. **Clinical outcomes:** The 100-patient demos are insufficient to derive a trustworthy sepsis cohort, positivity, confounder adjustment, or clinical timing curves. Pyxis time is not first antibiotic administration.
-4. **Synthetic causal benchmark:** Independent separate known-truth simulator; no physiologic or clinical calibration and not a proof of treatment benefit.
-5. **Database experiment:** Compare MongoDB documents with a simple SQLite normalized-ish table carrying JSON; it is *not* a comprehensive MongoDB vs relational database system benchmark. The benchmark measures matched as-of queries and basic ingest. Warm-up, execution plans and repeated independent runs are needed for general performance conclusions.
-6. **Data joins:** `subject_id` and `hadm_id` matching, plus ED time windows, can miss relevant events and should never be considered complete. Some ED encounters lack a linked admission ID. Hospital `emar` may contain documented medication events but its timestamps are distinct from directly observed administration, and medication specifics require clinical audit.
-7. **No MongoDB or Synthea superiority assumed:** This MVP uses open MIMIC samples and synthetic delay for timestamp sensitivity, not ORiGAMi training or proof of representation learning.
-8. **Any next-stage full MIMIC or HiRID dataset stays on permitted infrastructure** and is never committed to public GitHub or used without the dataset's DUA, institutional policies, and collaborator permissions.
+The project is an observation-process and data-engineering study, not a sepsis detection system or a clinically validated antibiotic timing model.
 
-## Proposed next phase
+## Study scope
 
-1. Confirm source table provenance, missingness, and compatibility of deidentified relative times.
-2. Introduce schema evolution events, retroactive correction records, and time-travel (bitemporal) query semantics with independent acceptance tests.
-3. Create a meaningful representation-learning task and preregister baselines and leakage audits before moving to optional ORiGAMi study.
-4. Only then attempt authorized ED sepsis cohort, independent clinical plausibility review and causal identification diagnostics.
+- The datasets are **selected public de-identified demonstration extracts**, not representative full-population cohorts. The ED subset has 222 stays among 64 people; counts from the hospital tables cannot be read as independent patients.
+- The research question of individualized antibiotic initiation in suspected sepsis remains future work. This repository has no adjudicated exposure strategy, verified antibiotic administration time, complete evolving confounders, target trial, or treatment-response effect.
+- Dataset chart time, storage time, and any inferred release proxy are distinct from actual clinician viewing or action time. A correct database as-of query is only correct **relative to the declared release model**.
+- Source joins use subject, admission and overlapping ED time window. A record excluded by the join is not necessarily wrong or clinically irrelevant; coverage is not complete.
+- Missingness and measurement density reflect clinical and documentation processes; biological absence and no recorded measurement are not interchangeable.
+
+## Statistics and visualization
+
+- The figure showing Wilson intervals assumes independent source rows, although patients contribute repeat vitalsign rows. These intervals must be read as **descriptive binomial reference intervals only**, not patient-cluster-corrected confidence limits. Cluster-resampling is a priority improvement.
+- Plots are exploratory and do not provide preregistered hypotheses, uncertainty from an external cohort or causal identification.
+- Sparse-cell suppression provides a simple precaution but is not a full disclosure-risk assessment for every possible derived output.
+- The dashboard requires local browser rendering, as GitHub's repository code view does not execute HTML.
+
+## Data systems
+
+- SQLite stores document payloads as JSON text; comparing it with MongoDB is not a comparison of a conventional normalized relational production schema against a document model.
+- The published benchmark records one GitHub runner environment, one bounded query workload and specific indexes. It does not establish scaling behavior, throughput under concurrency, resource utilization, cold-cache performance, or any database's broad superiority.
+- The system does not implement an authenticated clinical application, audited clinician access, revision-history bitemporal retrieval, or operational hospital deployment.
+- Artificial delays and local fixtures exist **only for deterministic software tests**, not as clinical data or synthetic clinical findings.
+
+## Governance
+
+Raw records and derived patient-level event streams remain outside tracked files. Full restricted MIMIC or MetroHealth sources require separate permissions, institutional governance and appropriate IRB approval. No prospective clinical deployment is claimed.
+
+For evidence and next actions see [verification](../evidence/VERIFICATION.md), [architecture](ARCHITECTURE.md) and [review report](REVIEW_REPORT.md).

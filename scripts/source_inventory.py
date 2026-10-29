@@ -61,6 +61,13 @@ def main():
         "source_versions":{"ed":"MIMIC-IV-ED-Demo 2.2","clinical":"MIMIC-IV-Clinical-Demo 2.2"},
         "n_csv_tables":len(rows),"tables":rows},indent=2)+"\n",encoding="utf-8")
     plot(rows,a.out/"figures/07_schema_fingerprint")
+    # The atlas generator creates figures 1-6. Finish the dashboard only
+    # after the cross-table inventory adds figure 7.
+    from publication_atlas import dashboard
+    aggregate=json.loads((a.out/"aggregate_results.json").read_text(encoding="utf-8"))
+    names=sorted(p.name for p in (a.out/"figures").glob("*.svg"))
+    assert len(names)==7, "Atlas dashboard must include all seven figures"
+    dashboard(aggregate,names,a.out/"index.html")
     print(f"Audited {len(rows)} real CSV sources; no rows or identifiers exported")
 
 if __name__=="__main__":main()
